@@ -3,6 +3,7 @@ import { Ingredient } from '@components/Ingredient';
 import { BadTag, NeutralTag } from '@components/Tags';
 import { Column } from '@components/table/Table';
 import { Recipe } from '@/interfaces/DataInterfaces';
+import { sortFunctionOnField } from '@/utils';
 
 const RecipeIconDisplay = ({ name }: { name: string }) => (
   <GameAssetIcon src={`/images/recipes/${name}.png`} name={name} />
@@ -43,14 +44,14 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
     label: '名称',
     displayFunction: (recipe) => recipe.name,
     isSortable: true,
-    sortValueGetter: (recipe) => recipe.name,
+    sortFunction: sortFunctionOnField((recipe) => recipe.name)
   },
   {
     accessor: 'tool',
     label: '道具',
     displayFunction: (recipe) => <ToolDisplay name={recipe.tool} />,
     isSortable: true,
-    sortValueGetter: (recipe) => recipe.tool,
+    sortFunction: sortFunctionOnField((recipe) => recipe.tool)
   },
   {
     accessor: 'ingredients',
@@ -86,13 +87,13 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
     label: '烹饪时间',
     displayFunction: (recipe) => recipe.cookingTime,
     isSortable: true,
-    sortValueGetter: (recipe) => recipe.cookingTime,
+    sortFunction: sortFunctionOnField((recipe) => recipe.cookingTime)
   },
   {
     accessor: 'price',
     label: '售价（円）',
     displayFunction: (recipe) => recipe.price,
     isSortable: true,
-    sortValueGetter: (recipe) => recipe.price,
+    sortFunction: sortFunctionOnField((recipe) => recipe.price)
   },
 ];

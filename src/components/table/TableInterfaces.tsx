@@ -3,7 +3,6 @@ export interface Column<T> {
   label: string;
   displayFunction?: DisplayFunction<T>;
   isSortable?: boolean;
-  sortValueGetter?: SortValueGetter<T>;
   sortFunction?: SortFunction<T>;
   filterFunctions?: ((item: T) => boolean)[];
 }
@@ -12,8 +11,12 @@ export interface Data {
   [key: string]: any;
 }
 
-export interface DisplayFunction<T> {
+interface DisplayFunction<T> {
   (item: T): JSX.Element | string | number;
+}
+
+export interface DisplayFunctionCollection<T> {
+  [key: string]: DisplayFunction<T>;
 }
 
 export interface SortFunction<T> {
@@ -24,8 +27,3 @@ export enum SortOrder {
   ASCENDING = 'asc',
   DESCENDING = 'desc',
 }
-
-export interface SortValueGetter<T> {
-  (item: T): string | number;
-}
-

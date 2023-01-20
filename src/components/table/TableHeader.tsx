@@ -5,7 +5,6 @@ import {
   Data,
   SortFunction,
   SortOrder,
-  SortValueGetter,
 } from './TableInterfaces';
 
 interface HeaderProps<T> {
@@ -17,7 +16,6 @@ interface SortTableFunction<T> {
   (
     accessor: string,
     order: SortOrder,
-    sortValueGetter?: SortValueGetter<T>,
     sortFunction?: SortFunction<T>
   ): void;
 }
@@ -37,8 +35,8 @@ export const TableHeader = <T extends Data>({
     setSortField(accessor);
     setSortOrder(order);
     const sortCol = headerData.find((col) => col.accessor === accessor);
-    const sortValueGetter = sortCol?.sortValueGetter;
-    sortTable(accessor, order, sortValueGetter);
+    const sortFunction = sortCol?.sortFunction;
+    sortTable(accessor, order, sortFunction);
   };
 
   return (

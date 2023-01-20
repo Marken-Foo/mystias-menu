@@ -4,43 +4,17 @@ import { TableHeader } from './TableHeader';
 import {
   Column,
   Data,
-  DisplayFunction,
+  DisplayFunctionCollection,
   SortFunction,
   SortOrder,
-  SortValueGetter,
 } from './TableInterfaces';
-
-interface DisplayFunctionCollection<T> {
-  [key: string]: DisplayFunction<T>;
-}
+import { TableRow } from './TableRow';
 
 interface TableProps<T> {
   columns: Column<T>[];
   data: T[];
   rowIdFunction: (item: T) => string;
 }
-
-interface TableRowProps<T> {
-  rowData: T;
-  accessors: string[];
-  displayFunctions: DisplayFunctionCollection<T>;
-}
-
-const TableRow = <T extends Data>({
-  rowData,
-  accessors,
-  displayFunctions,
-}: TableRowProps<T>) => {
-  // console.log('display functions:', displayFunctions);
-  // console.log('accessors:', accessors);
-  return (
-    <tr>
-      {accessors.map((accessor) => {
-        return <td key={accessor}>{displayFunctions[accessor](rowData)}</td>;
-      })}
-    </tr>
-  );
-};
 
 export const Table = <T extends Data>({
   columns,
@@ -77,7 +51,6 @@ export const Table = <T extends Data>({
   const sortTable = (
     sortField: string,
     sortOrder: SortOrder,
-    sortValueGetter: SortValueGetter<T> | null = null,
     sortFunction: SortFunction<T> | null = null
   ) => {
     if (sortField === '') {
@@ -85,32 +58,16 @@ export const Table = <T extends Data>({
     }
     const sortOrderChanger = (sortFunction: SortFunction<T>) => (a: T, b: T) =>
       (sortOrder === SortOrder.ASCENDING ? 1 : -1) * sortFunction(a, b);
-    if (sortValueGetter === null) {
-      const sortedData =
-        sortFunction === null
-          ? [...displayData]
-          : [...displayData].sort(sortOrderChanger(sortFunction));
-      setDisplayData(sortedData);
-    } else {
-      const defaultSortFunction = (a: T, b: T): number => {
-        return sortValueGetter(a)
-          .toString()
-          .localeCompare(sortValueGetter(b).toString(), 'zh', {
-            numeric: true,
-          });
-      };
-      const sortedData = [...displayData].sort(
-        sortOrderChanger(defaultSortFunction)
-      );
-      setDisplayData(sortedData);
-    }
+    const sortedData =
+      sortFunction === null
+        ? [...displayData]
+        : [...displayData].sort(sortOrderChanger(sortFunction));
+    setDisplayData(sortedData);
   };
 
   if (displayData.length === 0) {
     return <>No table data</>;
   }
-  // console.log('Passing accessors from table:', accessors);
-  // console.log('Passing displayFunctions from table:', displayFunctions);
   return (
     <table>
       <TableHeader headerData={headerData} sortTable={sortTable} />
