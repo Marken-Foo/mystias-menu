@@ -1,4 +1,4 @@
-import { GameAssetIcon } from './GameAssetIcon';
+import { GameAssetIcon } from '@components/GameAssetIcon';
 
 export const Ingredient = ({ name, imageSource }) => {
   return (

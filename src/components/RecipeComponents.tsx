@@ -1,8 +1,8 @@
-import { GameAssetIcon } from '../components/GameAssetIcon';
-import { Ingredient } from '../components/Ingredient';
-import { BadTag, NeutralTag } from '../components/Tags';
-import { Column } from './table/Table';
-import { Recipe } from '../interfaces/DataInterfaces';
+import { GameAssetIcon } from '@components/GameAssetIcon';
+import { Ingredient } from '@components/Ingredient';
+import { BadTag, NeutralTag } from '@components/Tags';
+import { Column } from '@components/table/Table';
+import { Recipe } from '@/interfaces/DataInterfaces';
 
 const RecipeIconDisplay = ({ name }: { name: string }) => (
   <GameAssetIcon src={`/images/recipes/${name}.png`} name={name} />
