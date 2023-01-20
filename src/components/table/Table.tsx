@@ -11,16 +11,24 @@ import {
 } from './TableInterfaces';
 import { TableRow } from './TableRow';
 
+export type { Column };
+
+interface RowFilter<T> {
+  (item: T): boolean;
+}
+
 interface TableProps<T> {
   columns: Column<T>[];
   data: T[];
   rowIdFunction: (item: T) => string;
+  filterFunctions: RowFilter<T>[];
 }
 
 export const Table = <T extends Data>({
   columns,
   data,
   rowIdFunction,
+  filterFunctions,
 }: TableProps<T>) => {
   const [allData, setAllData] = useState<T[]>([]);
   const [displayData, setDisplayData] = useState<T[]>([]);
@@ -51,6 +59,18 @@ export const Table = <T extends Data>({
     }
   }, [columns]);
 
+  // Set filter information
+  useEffect(() => {
+    const evaluateRowFilter = (row: T) => {
+      for (const filterFunction of filterFunctions) {
+        if (!filterFunction(row)) return false;
+      }
+      return true;
+    };
+    const filteredData = allData.filter(evaluateRowFilter);
+    setDisplayData(filteredData);
+  }, [filterFunctions]);
+
   const sortTable: SortTableFunction<T> = (
     sortField,
     sortOrder,
@@ -66,6 +86,7 @@ export const Table = <T extends Data>({
         ? [...displayData]
         : [...displayData].sort(sortOrderChanger(sortFunction));
     setDisplayData(sortedData);
+    return;
   };
 
   if (displayData.length === 0) {
@@ -87,5 +108,3 @@ export const Table = <T extends Data>({
     </table>
   );
 };
-
-export type { Column };

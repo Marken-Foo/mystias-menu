@@ -31,6 +31,7 @@ const App = () => {
         columns={recipeColumns}
         data={recipes}
         rowIdFunction={rowIdFunction}
+        filterFunctions={[]}
       />
     </div>
   );
