@@ -20,7 +20,7 @@ export interface SortFunction<T> {
   (a: T, b: T): number;
 }
 
-export enum SortOrders {
+export enum SortOrder {
   ASCENDING = 'asc',
   DESCENDING = 'desc',
 }

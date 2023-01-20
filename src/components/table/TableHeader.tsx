@@ -4,7 +4,7 @@ import {
   Column,
   Data,
   SortFunction,
-  SortOrders,
+  SortOrder,
   SortValueGetter,
 } from './TableInterfaces';
 
@@ -16,7 +16,7 @@ interface HeaderProps<T> {
 interface SortTableFunction<T> {
   (
     accessor: string,
-    order: SortOrders,
+    order: SortOrder,
     sortValueGetter?: SortValueGetter<T>,
     sortFunction?: SortFunction<T>
   ): void;
@@ -27,13 +27,13 @@ export const TableHeader = <T extends Data>({
   sortTable,
 }: HeaderProps<T>) => {
   const [sortField, setSortField] = useState<string>('');
-  const [sortOrder, setSortOrder] = useState<string>(SortOrders.ASCENDING);
+  const [sortOrder, setSortOrder] = useState<string>(SortOrder.ASCENDING);
 
   const sortByField = (accessor: string) => {
     const order =
-      accessor === sortField && sortOrder === SortOrders.ASCENDING
-        ? SortOrders.DESCENDING
-        : SortOrders.ASCENDING;
+      accessor === sortField && sortOrder === SortOrder.ASCENDING
+        ? SortOrder.DESCENDING
+        : SortOrder.ASCENDING;
     setSortField(accessor);
     setSortOrder(order);
     const sortCol = headerData.find((col) => col.accessor === accessor);

@@ -6,7 +6,7 @@ import {
   Data,
   DisplayFunction,
   SortFunction,
-  SortOrders,
+  SortOrder,
   SortValueGetter,
 } from './TableInterfaces';
 
@@ -76,31 +76,32 @@ export const Table = <T extends Data>({
 
   const sortTable = (
     sortField: string,
-    sortOrder: string,
+    sortOrder: SortOrder,
     sortValueGetter: SortValueGetter<T> | null = null,
     sortFunction: SortFunction<T> | null = null
   ) => {
     if (sortField === '') {
       return;
     }
+    const sortOrderChanger = (sortFunction: SortFunction<T>) => (a: T, b: T) =>
+      (sortOrder === SortOrder.ASCENDING ? 1 : -1) * sortFunction(a, b);
     if (sortValueGetter === null) {
       const sortedData =
         sortFunction === null
           ? [...displayData]
-          : [...displayData].sort(sortFunction);
+          : [...displayData].sort(sortOrderChanger(sortFunction));
       setDisplayData(sortedData);
     } else {
       const defaultSortFunction = (a: T, b: T): number => {
-        return (
-          (sortOrder === SortOrders.ASCENDING ? 1 : -1) *
-          sortValueGetter(a)
-            .toString()
-            .localeCompare(sortValueGetter(b).toString(), 'zh', {
-              numeric: true,
-            })
-        );
+        return sortValueGetter(a)
+          .toString()
+          .localeCompare(sortValueGetter(b).toString(), 'zh', {
+            numeric: true,
+          });
       };
-      const sortedData = [...displayData].sort(defaultSortFunction);
+      const sortedData = [...displayData].sort(
+        sortOrderChanger(defaultSortFunction)
+      );
       setDisplayData(sortedData);
     }
   };
