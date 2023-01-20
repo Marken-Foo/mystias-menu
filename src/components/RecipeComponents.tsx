@@ -1,7 +1,7 @@
 import { GameAssetIcon } from '../components/GameAssetIcon';
 import { Ingredient } from '../components/Ingredient';
 import { BadTag, NeutralTag } from '../components/Tags';
-import { Column } from '../components/Table';
+import { Column } from './table/Table';
 import { Recipe } from '../interfaces/DataInterfaces';
 
 const RecipeIconDisplay = ({ name }: { name: string }) => (

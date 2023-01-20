@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Recipe } from './interfaces/DataInterfaces';
 import { RECIPE_COLUMNS } from './components/RecipeComponents';
-import * as tb from './components/Table';
+import * as tb from './components/table/Table';
 import { Title } from './components/Title';
 import './App.css';
 
