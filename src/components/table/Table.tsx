@@ -6,8 +6,6 @@ import {
   Data,
   DisplayFunctionCollection,
   SortFunction,
-  SortOrder,
-  SortTableFunction,
 } from './TableInterfaces';
 import { TableRow } from './TableRow';
 
@@ -15,6 +13,15 @@ export type { Column };
 
 interface RowFilter<T> {
   (item: T): boolean;
+}
+
+enum SortOrder {
+  ASCENDING = 'asc',
+  DESCENDING = 'desc',
+}
+
+interface SortTableFunction<T> {
+  (accessor: string, order: SortOrder, dataToSort: T[]): void;
 }
 
 interface TableProps<T> {
@@ -37,6 +44,9 @@ export const Table = <T extends Data>({
     DisplayFunctionCollection<T>
   >({});
   const [accessors, setAccessors] = useState<string[]>([]);
+  // States for sorting
+  const [sortField, setSortField] = useState('');
+  const [sortOrder, setSortOrder] = useState(SortOrder.ASCENDING);
 
   // Set data if base data set changes.
   useEffect(() => {
@@ -69,22 +79,32 @@ export const Table = <T extends Data>({
     };
     const filteredData = allData.filter(evaluateRowFilter);
     setDisplayData(filteredData);
+    // sort the table with the new data
+    sortTable(sortField, sortOrder, filteredData);
   }, [filterFunctions]);
 
-  const sortTable: SortTableFunction<T> = (
-    sortField,
-    sortOrder,
-    sortFunction
-  ) => {
-    if (sortField === '') {
+  const sortByField = (accessor: string) => {
+    const order =
+      accessor === sortField && sortOrder === SortOrder.ASCENDING
+        ? SortOrder.DESCENDING
+        : SortOrder.ASCENDING;
+    setSortField(accessor);
+    setSortOrder(order);
+    sortTable(accessor, order, displayData);
+  };
+
+  const sortTable: SortTableFunction<T> = (accessor, sortOrder, dataToSort) => {
+    if (accessor === '') {
       return;
     }
+    const sortCol = headerData.find((col) => col.accessor === accessor);
+    const sortFunction = sortCol?.sortFunction;
     const sortOrderChanger = (sortFunction: SortFunction<T>) => (a: T, b: T) =>
       (sortOrder === SortOrder.ASCENDING ? 1 : -1) * sortFunction(a, b);
     const sortedData =
       sortFunction === undefined
-        ? [...displayData]
-        : [...displayData].sort(sortOrderChanger(sortFunction));
+        ? [...dataToSort]
+        : [...dataToSort].sort(sortOrderChanger(sortFunction));
     setDisplayData(sortedData);
     return;
   };
@@ -94,7 +114,11 @@ export const Table = <T extends Data>({
   }
   return (
     <table>
-      <TableHeader headerData={headerData} sortTable={sortTable} />
+      <TableHeader
+        headerData={headerData}
+        // sortTable={sortTable}
+        sortByField={sortByField}
+      />
       <tbody>
         {displayData.map((row) => (
           <TableRow
