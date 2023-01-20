@@ -1,45 +1,59 @@
 import { useEffect, useState } from 'react';
 
-export interface RowComparator {
-  (a: Row, b: Row): number;
+interface Data {
+  [key: string]: any;
 }
 
-export interface Column {
+interface DisplayFunction<T> {
+  (item: T): JSX.Element | string | number;
+}
+
+interface SortFunction<T> {
+  (a: T, b: T): number;
+}
+
+interface SortValueGetter<T> {
+  (item: T): string | number;
+}
+
+interface SortTableFunction<T> {
+  (
+    accessor: string,
+    order: SortOrders,
+    sortValueGetter?: SortValueGetter<T>,
+    sortFunction?: SortFunction<T>
+  ): void;
+}
+
+export interface Column<T> {
   accessor: string;
   label: string;
+  displayFunction?: DisplayFunction<T>;
   isSortable?: boolean;
-  sortFunction?: RowComparator;
+  sortValueGetter?: SortValueGetter<T>;
+  sortFunction?: SortFunction<T>;
+  filterFunctions?: ((item: T) => boolean)[];
 }
 
-export interface Cell {
-  data: any;
-  display?: JSX.Element | string | number;
+interface HeaderProps<T> {
+  headerData: Column<T>[];
+  sortTable: SortTableFunction<T>;
 }
 
-export interface Row {
-  id: string;
-  cellInfo: {[index: string]: Cell};
+interface TableProps<T> {
+  columns: Column<T>[];
+  data: T[];
+  rowIdFunction: (item: T) => string;
 }
 
-export const makeCell = (
-  data: any,
-  display?: JSX.Element | string | number
-): Cell => {
-  return { data: data, display: display };
-};
-
-interface HeaderProps {
-  headerData: Column[];
-  sortTable: (
-    accessor: string,
-    order: string,
-    sortFunction?: RowComparator
-  ) => void;
+interface TableRowProps<T> {
+  rowData: T;
+  accessors: string[];
+  displayFunctions: DisplayFunctionCollection<T>;
 }
 
-interface TableProps {
-  columns: Column[];
-  data: Row[];
+interface DisplayFunctionCollection<T> {
+  [key: string]: DisplayFunction<T>;
 }
 
 enum SortOrders {
@@ -47,24 +61,31 @@ enum SortOrders {
   DESCENDING = 'desc',
 }
 
-const TableHeader = ({ headerData, sortTable }: HeaderProps) => {
+const TableHeader = <T extends Data>({
+  headerData,
+  sortTable,
+}: HeaderProps<T>) => {
   const [sortField, setSortField] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>(SortOrders.ASCENDING);
 
   const sortByField = (accessor: string) => {
-    const order: string =
+    const order =
       accessor === sortField && sortOrder === SortOrders.ASCENDING
         ? SortOrders.DESCENDING
         : SortOrders.ASCENDING;
     setSortField(accessor);
     setSortOrder(order);
-    sortTable(accessor, order);
+    const sortCol = headerData.find((col) => col.accessor === accessor);
+    const sortValueGetter = sortCol?.sortValueGetter;
+    console.log(sortCol);
+    console.log(sortValueGetter);
+    sortTable(accessor, order, sortValueGetter);
   };
 
   return (
     <thead>
       <tr>
-        {headerData.map((header: Column) => (
+        {headerData.map((header: Column<T>) => (
           <th
             key={header.accessor}
             onClick={
@@ -82,62 +103,88 @@ const TableHeader = ({ headerData, sortTable }: HeaderProps) => {
   );
 };
 
-const TableRow = ({
+const TableRow = <T extends Data>({
   rowData,
-  headerData,
-}: {
-  rowData: Row;
-  headerData: Column[];
-}) => {
+  accessors,
+  displayFunctions,
+}: TableRowProps<T>) => {
+  // console.log('display functions:', displayFunctions);
+  // console.log('accessors:', accessors);
   return (
     <tr>
-      {headerData.map((header: Column) => (
-        <td key={header.label} className={'tableCell'}>
-          {rowData.cellInfo[header.accessor].display === undefined
-            ? rowData.cellInfo[header.accessor].data
-            : rowData.cellInfo[header.accessor].display}
-        </td>
-      ))}
+      {accessors.map((accessor) => {
+        return <td key={accessor}>{displayFunctions[accessor](rowData)}</td>;
+      })}
     </tr>
   );
 };
 
-export const Table = ({ columns, data }: TableProps) => {
-  console.log('Columns in table:', columns);
-  const [displayData, setDisplayData] = useState<Row[]>([]);
-  const [headerData, setHeaderData] = useState<Column[]>([]);
+export const Table = <T extends Data>({
+  columns,
+  data,
+  rowIdFunction,
+}: TableProps<T>) => {
+  const [allData, setAllData] = useState<T[]>([]);
+  const [displayData, setDisplayData] = useState<T[]>([]);
+  const [headerData, setHeaderData] = useState<Column<T>[]>([]);
+  const [displayFunctions, setDisplayFunctions] = useState<
+    DisplayFunctionCollection<T>
+  >({});
+  const [accessors, setAccessors] = useState<string[]>([]);
 
   useEffect(() => {
+    setAllData(data);
     setDisplayData(data);
+  }, [data]);
+
+  useEffect(() => {
     setHeaderData(columns);
-  }, [columns, data]);
+    const accessors = columns.map((col) => col.accessor);
+    setAccessors(accessors);
+    const displayFunctionInputs = Object.fromEntries(
+      columns.map((col) => [col.accessor, col.displayFunction])
+    );
+    if (displayFunctionInputs !== undefined) {
+      setDisplayFunctions(
+        displayFunctionInputs as DisplayFunctionCollection<T>
+      );
+    }
+  }, [columns]);
 
   const sortTable = (
     sortField: string,
     sortOrder: string,
-    sortFunction: RowComparator | null = null
+    sortValueGetter: SortValueGetter<T> | null = null,
+    sortFunction: SortFunction<T> | null = null
   ) => {
     if (sortField === '') {
       return;
     }
-    const defaultSortFunction = (a: Row, b: Row): number => {
-      return (
-        (sortOrder === SortOrders.ASCENDING ? 1 : -1) *
-        a.cellInfo[sortField].data
-          .toString()
-          .localeCompare(b.cellInfo[sortField].data.toString(), 'zh', {
-            numeric: true,
-          })
-      );
-    };
-    const sortedData =
-      sortFunction === null
-        ? [...displayData].sort(defaultSortFunction)
-        : [...displayData].sort(sortFunction);
-    setDisplayData(sortedData);
+    if (sortValueGetter === null) {
+      const sortedData =
+        sortFunction === null
+          ? [...displayData]
+          : [...displayData].sort(sortFunction);
+      setDisplayData(sortedData);
+    } else {
+      const defaultSortFunction = (a: T, b: T): number => {
+        return (
+          (sortOrder === SortOrders.ASCENDING ? 1 : -1) *
+          sortValueGetter(a)
+            .toString()
+            .localeCompare(sortValueGetter(b).toString(), 'zh', {
+              numeric: true,
+            })
+        );
+      };
+      const sortedData = [...displayData].sort(defaultSortFunction);
+      setDisplayData(sortedData);
+    }
   };
 
   if (displayData.length > 0) {
+    // console.log('Passing accessors from table:', accessors);
+    // console.log('Passing displayFunctions from table:', displayFunctions);
     return (
       <table>
         <TableHeader headerData={headerData} sortTable={sortTable} />
@@ -145,8 +192,9 @@ export const Table = ({ columns, data }: TableProps) => {
           {displayData.map((row) => (
             <TableRow
               rowData={row}
-              headerData={headerData}
-              key={row.id}
+              accessors={accessors}
+              displayFunctions={displayFunctions}
+              key={rowIdFunction(row)}
             />
           ))}
         </tbody>
