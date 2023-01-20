@@ -1,23 +1,10 @@
 import { useState } from 'react';
 
-import {
-  Column,
-  Data,
-  SortFunction,
-  SortOrder,
-} from './TableInterfaces';
+import { Column, Data, SortOrder, SortTableFunction } from './TableInterfaces';
 
 interface HeaderProps<T> {
   headerData: Column<T>[];
   sortTable: SortTableFunction<T>;
-}
-
-interface SortTableFunction<T> {
-  (
-    accessor: string,
-    order: SortOrder,
-    sortFunction?: SortFunction<T>
-  ): void;
 }
 
 export const TableHeader = <T extends Data>({

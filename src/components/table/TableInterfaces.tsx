@@ -27,3 +27,7 @@ export enum SortOrder {
   ASCENDING = 'asc',
   DESCENDING = 'desc',
 }
+
+export interface SortTableFunction<T> {
+  (accessor: string, order: SortOrder, sortFunction?: SortFunction<T>): void;
+}

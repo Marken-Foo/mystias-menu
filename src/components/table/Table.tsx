@@ -7,6 +7,7 @@ import {
   DisplayFunctionCollection,
   SortFunction,
   SortOrder,
+  SortTableFunction,
 } from './TableInterfaces';
 import { TableRow } from './TableRow';
 
@@ -29,11 +30,13 @@ export const Table = <T extends Data>({
   >({});
   const [accessors, setAccessors] = useState<string[]>([]);
 
+  // Set data if base data set changes.
   useEffect(() => {
     setAllData(data);
     setDisplayData(data);
   }, [data]);
 
+  // Set per-column information
   useEffect(() => {
     setHeaderData(columns);
     const accessors = columns.map((col) => col.accessor);
@@ -48,10 +51,10 @@ export const Table = <T extends Data>({
     }
   }, [columns]);
 
-  const sortTable = (
-    sortField: string,
-    sortOrder: SortOrder,
-    sortFunction: SortFunction<T> | null = null
+  const sortTable: SortTableFunction<T> = (
+    sortField,
+    sortOrder,
+    sortFunction
   ) => {
     if (sortField === '') {
       return;
@@ -59,7 +62,7 @@ export const Table = <T extends Data>({
     const sortOrderChanger = (sortFunction: SortFunction<T>) => (a: T, b: T) =>
       (sortOrder === SortOrder.ASCENDING ? 1 : -1) * sortFunction(a, b);
     const sortedData =
-      sortFunction === null
+      sortFunction === undefined
         ? [...displayData]
         : [...displayData].sort(sortOrderChanger(sortFunction));
     setDisplayData(sortedData);
