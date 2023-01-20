@@ -1,0 +1,567 @@
+[
+    {
+        "name": "鳟鱼",
+        "thwikiImage": "鳟鱼（东方夜雀食堂）.png",
+        "category": "海鲜",
+        "tags": [
+            "水产",
+            "鲜"
+        ],
+        "description": "栖息于淡水中的冷水鱼，较为常见",
+        "dlc": "base"
+    },
+    {
+        "name": "八目鳗",
+        "thwikiImage": "八目鳗（东方夜雀食堂）.png",
+        "category": "海鲜",
+        "tags": [
+            "水产",
+            "招牌",
+            "鲜"
+        ],
+        "description": "一种洄游性海鱼但却在幻想乡的河流湖泊随处可见，较为常见",
+        "dlc": "base"
+    },
+    {
+        "name": "三文鱼",
+        "thwikiImage": "三文鱼（东方夜雀食堂）.png",
+        "category": "海鲜",
+        "tags": [
+            "水产",
+            "高级",
+            "鲜"
+        ],
+        "description": "一种高度洄游海鱼但在幻想乡的河流湖泊可见，有点珍贵",
+        "dlc": "base"
+    },
+    {
+        "name": "金枪鱼",
+        "thwikiImage": "金枪鱼（东方夜雀食堂）.png",
+        "category": "海鲜",
+        "tags": [
+            "水产",
+            "高级",
+            "鲜"
+        ],
+        "description": "一种大洋性洄游海鱼但在幻想乡的河流湖泊可见，有点珍贵",
+        "dlc": "base"
+    },
+    {
+        "name": "极上金枪鱼",
+        "thwikiImage": "极上金枪鱼（东方夜雀食堂）.png",
+        "category": "海鲜",
+        "tags": [
+            "水产",
+            "高级",
+            "传说",
+            "海味",
+            "鲜"
+        ],
+        "description": "金枪鱼中的顶级品种，非常珍贵",
+        "dlc": "base"
+    },
+    {
+        "name": "河豚",
+        "thwikiImage": "河豚（东方夜雀食堂）.png",
+        "category": "海鲜",
+        "tags": [
+            "水产",
+            "海味",
+            "鲜"
+        ],
+        "description": "高级水产品，但体内含毒素，需小心处理",
+        "dlc": "base"
+    },
+    {
+        "name": "虾",
+        "thwikiImage": "虾（东方夜雀食堂）.png",
+        "category": "海鲜",
+        "tags": [
+            "水产",
+            "鲜"
+        ],
+        "description": "分布在雾之湖和玄武泽的淡水虾，较为常见",
+        "dlc": "base"
+    },
+    {
+        "name": "章鱼",
+        "thwikiImage": "章鱼（东方夜雀食堂）.png",
+        "category": "海鲜",
+        "tags": [
+            "水产",
+            "鲜",
+            "海味"
+        ],
+        "description": "鲜嫩可爱的海洋生物，但幻想乡没有海......它的脚是宝贝，有压倒性的肉质感，而且只要用最简单的火烤，就能享受弹牙的美味！",
+        "dlc": "base"
+    },
+    {
+        "name": "猪肉",
+        "thwikiImage": "猪肉（东方夜雀食堂）.png",
+        "category": "肉类",
+        "tags": [
+            "肉"
+        ],
+        "description": "人里圈养的家猪肉，较为常见",
+        "dlc": "base"
+    },
+    {
+        "name": "牛肉",
+        "thwikiImage": "牛肉（东方夜雀食堂）.png",
+        "category": "肉类",
+        "tags": [
+            "肉"
+        ],
+        "description": "人里圈养的肉牛肉，较为常见",
+        "dlc": "base"
+    },
+    {
+        "name": "鹿肉",
+        "thwikiImage": "鹿肉（东方夜雀食堂）.png",
+        "category": "肉类",
+        "tags": [
+            "肉"
+        ],
+        "description": "猎人们在山间猎回来的鹿肉，有点珍贵",
+        "dlc": "base"
+    },
+    {
+        "name": "野猪肉",
+        "thwikiImage": "野猪肉（东方夜雀食堂）.png",
+        "category": "肉类",
+        "tags": [
+            "肉"
+        ],
+        "description": "猎人们在山间猎回来的野猪肉，充满野性",
+        "dlc": "base"
+    },
+    {
+        "name": "黑毛猪肉",
+        "thwikiImage": "黑毛猪肉（东方夜雀食堂）.png",
+        "category": "肉类",
+        "tags": [
+            "肉",
+            "传说",
+            "山珍"
+        ],
+        "description": "在高海拔深山中圈养的黑毛猪肉，非常高级",
+        "dlc": "base"
+    },
+    {
+        "name": "和牛",
+        "thwikiImage": "和牛（东方夜雀食堂）.png",
+        "category": "肉类",
+        "tags": [
+            "肉",
+            "高级",
+            "传说"
+        ],
+        "description": "传闻是超优质的肉牛品种，又称雪花肉，非常高级",
+        "dlc": "base"
+    },
+    {
+        "name": "豆腐",
+        "thwikiImage": "豆腐（东方夜雀食堂）.png",
+        "category": "蔬菜",
+        "tags": [
+            "素",
+            "家常",
+            "清淡"
+        ],
+        "description": "人里有卖的豆腐，较为常见",
+        "dlc": "base"
+    },
+    {
+        "name": "土豆",
+        "thwikiImage": "土豆（东方夜雀食堂）.png",
+        "category": "蔬菜",
+        "tags": [
+            "素",
+            "家常"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "洋葱",
+        "thwikiImage": "洋葱（东方夜雀食堂）.png",
+        "category": "蔬菜",
+        "tags": [
+            "素",
+            "鲜"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "南瓜",
+        "thwikiImage": "南瓜（东方夜雀食堂）.png",
+        "category": "蔬菜",
+        "tags": [
+            "素",
+            "饱腹"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "萝卜",
+        "thwikiImage": " 萝卜（东方夜雀食堂）.png",
+        "category": "蔬菜",
+        "tags": [
+            "素",
+            "下酒"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "海苔",
+        "thwikiImage": "海苔（东方夜雀食堂）.png",
+        "category": "蔬菜",
+        "tags": [
+            "素",
+            "鲜"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "蘑菇",
+        "thwikiImage": "蘑菇（东方夜雀食堂）.png",
+        "category": "蔬菜",
+        "tags": [
+            "素",
+            "鲜",
+            "菌类"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "松露",
+        "thwikiImage": "松露（东方夜雀食堂）.png",
+        "category": "蔬菜",
+        "tags": [
+            "素",
+            "鲜",
+            "菌类",
+            "高级",
+            "传说",
+            "山珍"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "竹笋",
+        "thwikiImage": "竹笋（东方夜雀食堂）.png",
+        "category": "蔬菜",
+        "tags": [
+            "素",
+            "清淡"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "鸡蛋",
+        "thwikiImage": "鸡蛋（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "生"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "桃子",
+        "thwikiImage": "桃子（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "甜",
+            "果味"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "白果",
+        "thwikiImage": "白果（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "适合拍照"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "蜂蜜",
+        "thwikiImage": "蜂蜜（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "甜"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "蝉蜕",
+        "thwikiImage": "蝉蜕（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "猎奇"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "幻昙华",
+        "thwikiImage": "幻昙华（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "高级",
+            "传说",
+            "梦幻",
+            "不可思议"
+        ],
+        "description": "生长在沼泽中的奇迹之花，非常珍贵",
+        "dlc": "base"
+    },
+    {
+        "name": "露水",
+        "thwikiImage": "露水（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "清淡"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "黄油",
+        "thwikiImage": "黄油（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "重油"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "面粉",
+        "thwikiImage": "面粉（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "饱腹"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "竹子",
+        "thwikiImage": "竹子（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "适合拍照"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "糯米",
+        "thwikiImage": "糯米（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "-"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "月光草",
+        "thwikiImage": "月光草（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "清淡",
+            "梦幻",
+            "文化底蕴",
+            "不可思议"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "冰块",
+        "thwikiImage": "冰块（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "凉爽"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "辣椒",
+        "thwikiImage": "辣椒（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "辣"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "葡萄",
+        "thwikiImage": "葡萄（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "果味",
+            "甜"
+        ],
+        "description": "",
+        "dlc": "base"
+    },
+    {
+        "name": "黑盐",
+        "thwikiImage": "黑盐（东方夜雀食堂）.png",
+        "category": "其他",
+        "tags": [
+            "咸"
+        ],
+        "description": "火山能量，积累上千万年；只为净化，你灵魂的尘埃......广告词这样写着，其实就是普通的火山岩盐。",
+        "dlc": "DLC1"
+    },
+    {
+        "name": "海胆",
+        "thwikiImage": "",
+        "category": "海鲜",
+        "tags": [
+            "水产",
+            "海味",
+            "鲜",
+            "传说",
+            "高级"
+        ],
+        "description": "据说在外界被称作传说级的食材，只要一小颗就能让人感受到整个海洋的美味，会是真的吗？样子长得倒是挺奇怪的......",
+        "dlc": "DLC1"
+    },
+    {
+        "name": "螃蟹",
+        "thwikiImage": "",
+        "category": "海鲜",
+        "tags": [
+            "水产",
+            "鲜",
+            "高级"
+        ],
+        "description": "以为有了盔甲就可以横行霸道的八脚笨蛋，只需要简单的清蒸就能成为究极美味！不过要小心它的钳子......",
+        "dlc": "DLC1"
+    },
+    {
+        "name": "黄瓜",
+        "thwikiImage": "",
+        "category": "蔬菜",
+        "tags": [
+            "素",
+            "家常",
+            "清淡"
+        ],
+        "description": "河童的嗜好物。虽然用来做菜和普通蔬菜没有区别，但却能让河童无比上瘾。究竟是其中的什么成分在起作用......",
+        "dlc": "DLC1"
+    },
+    {
+        "name": "板栗",
+        "thwikiImage": "",
+        "category": "蔬菜",
+        "tags": [
+            "家常",
+            "素"
+        ],
+        "description": "相传道教创始人修炼时，由于不爱荤腥，便栽了很多板栗树，以栗代饭。栗子种仁肥厚，营养丰富，不仅受到许多道教人士的推崇，也经常被农民用来代替粮食。",
+        "dlc": "DLC3"
+    },
+    {
+        "name": "奶油",
+        "thwikiImage": "",
+        "category": "其他",
+        "tags": [
+            "家常",
+            "甜",
+            "西式"
+        ],
+        "description": "用非常特殊的方法处理的奶制品，无论什么时候都能秒杀甜品嗜好者的味蕾！",
+        "dlc": "DLC1"
+    },
+    {
+        "name": "柠檬",
+        "thwikiImage": "",
+        "category": "其他",
+        "tags": [
+            "酸",
+            "果味"
+        ],
+        "description": "仅在桥附近特别的树上产出的奇怪果实，据说没有人能够无表情板着脸吃完一整颗，有着强大的“酸”味，只能取其果汁来调味。",
+        "dlc": "DLC2"
+    },
+    {
+        "name": "莲子",
+        "thwikiImage": "",
+        "category": "其他",
+        "tags": [
+            "招牌",
+            "清淡",
+            "文化底蕴"
+        ],
+        "description": "非常古老的水生植物--莲的种子。莲子的芯特别苦，千万得处理好，别混到料理给客人吃了。",
+        "dlc": "DLC3"
+    },
+    {
+        "name": "松子",
+        "thwikiImage": "",
+        "category": "其他",
+        "tags": [
+            "招牌",
+            "清淡",
+            "高级"
+        ],
+        "description": "红松树的种子，据说在外界已经被列为濒危物种，但在幻想乡仍然很常见。传说松子有延年益寿的功能，是古代道士辟谷时的常备之物。",
+        "dlc": "DLC3"
+    },
+    {
+        "name": "并蒂莲",
+        "thwikiImage": "",
+        "category": "其他",
+        "tags": [
+            "文化底蕴",
+            "高级",
+            "传说",
+            "清淡",
+            "梦幻"
+        ],
+        "description": "根茎生长在桥的附近，花朵成熟后会破水而出，淡红色并有淡香味，高级食材，也是地底人的节日装饰。",
+        "dlc": "DLC2"
+    },
+    {
+        "name": "芝士",
+        "thwikiImage": "",
+        "category": "其他",
+        "tags": [
+            "高级",
+            "咸",
+            "鲜"
+        ],
+        "description": "浓郁的奶油熟成后的珍贵食材，取一片加热融化就能让料理变得奶香浓郁，美味十足。",
+        "dlc": "DLC2"
+    },
+    {
+        "name": "地瓜",
+        "thwikiImage": "",
+        "category": "其他",
+        "tags": [
+            "饱腹"
+        ],
+        "description": "世上最实在的食材！不仅香甜软糯，而且能强效地应对饥饿，在冬天还有暖手的效果",
+        "dlc": "DLC3"
+    }
+]

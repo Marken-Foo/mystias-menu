@@ -1,0 +1,40 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.badTag {
+  background-color: #333333;
+  border-radius: 12px;
+  color: #f3474d;
+  font-weight: bold;
+  line-height: 200%;
+  margin-right: 4px;
+  padding: 4px 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.neutralTag {
+  background-color: #f0e0ab;
+  border-radius: 12px;
+  color: #af7b11;
+  font-weight: bold;
+  line-height: 200%;
+  margin-right: 4px;
+  padding: 4px 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tableHeader {
+  font-size: 120%;
+  font-weight: bold;
+  max-width: 300px;
+}
+
+.tableCell {
+  max-width: 300px;
+}
