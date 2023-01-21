@@ -1,67 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Recipe } from '@/interfaces/DataInterfaces';
 import { RECIPE_COLUMNS } from '@components/RecipeComponents';
+import { RecipeForm } from '@components/RecipeForm';
 import * as tb from '@components/table/Table';
 import { Title } from '@components/Title';
 import '@/App.css';
 
 const RECIPES_URI = '/recipes.json';
 
-interface DlcChoice {
+export interface DlcChoice {
   base: boolean;
   DLC1: boolean;
   DLC2: boolean;
   DLC3: boolean;
 }
 
-interface Dlc {
+export interface Dlc {
   name: string;
   label: string;
 }
-
-interface RecipeFormProps {
-  dlcs: Dlc[];
-  dlcVersions: DlcChoice;
-  setDlcVersions: React.Dispatch<React.SetStateAction<DlcChoice>>;
-}
-
-const CheckboxWithCaption = ({
-  initialState,
-  onChange,
-  label,
-}: {
-  initialState: boolean;
-  onChange: () => void;
-  label: string;
-}) => {
-  return (
-    <span>
-      {label}
-      <input type="checkbox" checked={initialState} onChange={onChange} />
-    </span>
-  );
-};
-
-const RecipeForm = ({ dlcs, dlcVersions, setDlcVersions }: RecipeFormProps) => {
-  return (
-    <>
-      DLCs:
-      {dlcs.map((dlc) => (
-        <CheckboxWithCaption
-          initialState={dlcVersions[dlc.name as keyof DlcChoice]}
-          onChange={() =>
-            setDlcVersions((prevState) => ({
-              ...prevState,
-              [dlc.name]: !prevState[dlc.name as keyof DlcChoice],
-            }))
-          }
-          label={dlc.label}
-          key={dlc.name}
-        />
-      ))}
-    </>
-  );
-};
 
 const App = () => {
   const DLCS: Dlc[] = [
@@ -74,7 +31,7 @@ const App = () => {
   const [dlcVersions, setDlcVersions] = useState<DlcChoice>(
     Object.fromEntries(
       DLCS.map((dlc) => [dlc.name, true])
-    ) as unknown as DlcChoice
+    ) as unknown as DlcChoice // Need to ensure DLCS and DlcChoice in sync
   );
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [recipeColumns,] =
