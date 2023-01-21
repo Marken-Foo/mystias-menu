@@ -6,7 +6,10 @@ import * as tb from '@components/table/Table';
 import { Title } from '@components/Title';
 import '@/App.css';
 
+import { Tag } from './components/Tags';
+
 const RECIPES_URI = '/recipes.json';
+const FOOD_TAGS_URI = '/foodTags.json';
 
 export interface DlcChoice {
   base: boolean;
@@ -18,6 +21,11 @@ export interface DlcChoice {
 export interface Dlc {
   name: string;
   label: string;
+}
+
+export enum SelectMode {
+  ALL = 'all',
+  AT_LEAST_ONE = 'some',
 }
 
 const App = () => {
@@ -34,9 +42,14 @@ const App = () => {
     ) as unknown as DlcChoice // Need to ensure DLCS and DlcChoice in sync
   );
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [recipeColumns,] =
-    useState<tb.Column<Recipe>[]>(RECIPE_COLUMNS);
+  const [recipeColumns] = useState<tb.Column<Recipe>[]>(RECIPE_COLUMNS);
+  const [foodTags, setFoodTags] = useState<Tag[]>([]);
+  const [selectedFoodTags, setSelectedFoodTags] = useState<Tag[]>([]);
+  const [selectFoodTagsMode, setSelectFoodTagsMode] = useState<SelectMode>(
+    SelectMode.ALL
+  );
 
+  // Load recipes
   useEffect(() => {
     const loadData = async () => {
       const res = await fetch(RECIPES_URI);
@@ -46,13 +59,40 @@ const App = () => {
     loadData();
   }, []);
 
+  // Load tags
+  useEffect(() => {
+    const loadFoodTags = async () => {
+      const res = await fetch(FOOD_TAGS_URI);
+      const data: Tag[] = await res.json();
+      setFoodTags(data);
+    };
+    loadFoodTags();
+  }, []);
+
+  const filterRecipeByDlc = (recipe: Recipe) => {
+    return Object.entries(dlcVersions)
+      .filter(([, isIncluded]) => isIncluded)
+      .map(([name]) => name)
+      .includes(recipe.dlc);
+  };
+
+  const filterRecipeByAllTags = (recipe: Recipe) => {
+    return selectedFoodTags.every((tag) => recipe.tags.includes(tag));
+  };
+
+  const filterRecipeBySomeTag = (recipe: Recipe) => {
+    if (selectedFoodTags.length === 0) return true;
+    return selectedFoodTags.some((tag) => recipe.tags.includes(tag));
+  };
+
+  const filterByTagFunctions = {
+    [SelectMode.ALL]: filterRecipeByAllTags,
+    [SelectMode.AT_LEAST_ONE]: filterRecipeBySomeTag,
+  };
+
   const filterFunctions = [
-    (recipe: Recipe) => {
-      return Object.entries(dlcVersions)
-        .filter(([, isIncluded]) => isIncluded)
-        .map(([name,]) => name)
-        .includes(recipe.dlc);
-    },
+    filterRecipeByDlc,
+    filterByTagFunctions[selectFoodTagsMode],
   ];
   const rowIdFunction = (recipe: Recipe) => recipe.name;
 
@@ -64,6 +104,11 @@ const App = () => {
         dlcs={DLCS}
         dlcVersions={dlcVersions}
         setDlcVersions={setDlcVersions}
+        tags={foodTags}
+        selectedTags={selectedFoodTags}
+        setSelectedTags={setSelectedFoodTags}
+        selectMode={selectFoodTagsMode}
+        setSelectMode={setSelectFoodTagsMode}
       />
       <tb.Table
         columns={recipeColumns}

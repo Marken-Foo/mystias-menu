@@ -1,5 +1,8 @@
-import { Dlc, DlcChoice } from '@/App'; // Only types, otherwise cyclic
-import { CheckboxWithCaption } from './CheckboxWithCaption';
+import { CheckboxWithCaption } from '@components/CheckboxWithCaption';
+import { TagPicker } from '@components/TagPicker';
+
+import { Dlc, DlcChoice, SelectMode } from '@/App'; // Only types, otherwise cyclic
+import { Tag } from '@components/Tags';
 
 interface DlcFormSectionProps {
   dlcs: Dlc[];
@@ -34,12 +37,22 @@ interface RecipeFormProps {
   dlcs: Dlc[];
   dlcVersions: DlcChoice;
   setDlcVersions: React.Dispatch<React.SetStateAction<DlcChoice>>;
+  tags: Tag[];
+  selectedTags: Tag[];
+  setSelectedTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+  selectMode: SelectMode;
+  setSelectMode: React.Dispatch<React.SetStateAction<SelectMode>>;
 }
 
 export const RecipeForm = ({
   dlcs,
   dlcVersions,
   setDlcVersions,
+  tags,
+  selectedTags,
+  setSelectedTags,
+  selectMode,
+  setSelectMode,
 }: RecipeFormProps) => {
   return (
     <>
@@ -47,6 +60,13 @@ export const RecipeForm = ({
         dlcs={dlcs}
         dlcVersions={dlcVersions}
         setDlcVersions={setDlcVersions}
+      />
+      <TagPicker
+        tags={tags}
+        selectedTags={selectedTags}
+        setSelectedTags={setSelectedTags}
+        selectMode={selectMode}
+        setSelectMode={setSelectMode}
       />
     </>
   );
