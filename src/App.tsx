@@ -6,18 +6,23 @@ import { Title } from '@components/Title';
 import '@/App.css';
 
 const RECIPES_URI = '/recipes.json';
-const DLC_VALUES = {
-  isBase: 'base',
-  isDlc1: 'DLC1',
-  isDlc2: 'DLC2',
-  isDlc3: 'DLC3',
-};
 
 interface DlcChoice {
-  isBase: boolean;
-  isDlc1: boolean;
-  isDlc2: boolean;
-  isDlc3: boolean;
+  base: boolean;
+  DLC1: boolean;
+  DLC2: boolean;
+  DLC3: boolean;
+}
+
+interface Dlc {
+  name: string;
+  label: string;
+}
+
+interface RecipeFormProps {
+  dlcs: Dlc[];
+  dlcVersions: DlcChoice;
+  setDlcVersions: React.Dispatch<React.SetStateAction<DlcChoice>>;
 }
 
 const CheckboxWithCaption = ({
@@ -37,39 +42,21 @@ const CheckboxWithCaption = ({
   );
 };
 
-const RecipeForm = ({ setDlcVersions }) => {
-  const [dlcChoice, setDlcChoice] = useState<DlcChoice>({
-    isBase: true,
-    isDlc1: true,
-    isDlc2: true,
-    isDlc3: true,
-  });
-
-  useEffect(() => {
-    setDlcVersions(dlcChoice);
-  }, [dlcChoice]);
-
-  const dlcLabels = {
-    isBase: 'Base game',
-    isDlc1: 'DLC1',
-    isDlc2: 'DLC2',
-    isDlc3: 'DLC3',
-  };
-
+const RecipeForm = ({ dlcs, dlcVersions, setDlcVersions }: RecipeFormProps) => {
   return (
     <>
       DLCs:
-      {Object.entries(dlcLabels).map(([key, label]) => (
+      {dlcs.map((dlc) => (
         <CheckboxWithCaption
-          initialState={dlcChoice[key as keyof DlcChoice]}
+          initialState={dlcVersions[dlc.name as keyof DlcChoice]}
           onChange={() =>
-            setDlcChoice((prevState) => ({
+            setDlcVersions((prevState) => ({
               ...prevState,
-              [key]: !prevState[key as keyof DlcChoice],
+              [dlc.name]: !prevState[dlc.name as keyof DlcChoice],
             }))
           }
-          label={label}
-          key={key}
+          label={dlc.label}
+          key={dlc.name}
         />
       ))}
     </>
@@ -77,10 +64,21 @@ const RecipeForm = ({ setDlcVersions }) => {
 };
 
 const App = () => {
+  const DLCS: Dlc[] = [
+    { name: 'base', label: '基础游戏' },
+    { name: 'DLC1', label: 'DLC1' },
+    { name: 'DLC2', label: 'DLC2' },
+    { name: 'DLC3', label: 'DLC3' },
+  ];
+
+  const [dlcVersions, setDlcVersions] = useState<DlcChoice>(
+    Object.fromEntries(
+      DLCS.map((dlc) => [dlc.name, true])
+    ) as unknown as DlcChoice
+  );
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [recipeColumns, setrecipeColumns] =
+  const [recipeColumns,] =
     useState<tb.Column<Recipe>[]>(RECIPE_COLUMNS);
-  const [dlcVersions, setDlcVersions] = useState({});
 
   useEffect(() => {
     const loadData = async () => {
@@ -94,8 +92,8 @@ const App = () => {
   const filterFunctions = [
     (recipe: Recipe) => {
       return Object.entries(dlcVersions)
-        .filter((arr) => arr[1])
-        .map((arr) => DLC_VALUES[arr[0] as keyof typeof DLC_VALUES])
+        .filter(([, isIncluded]) => isIncluded)
+        .map(([name,]) => name)
         .includes(recipe.dlc);
     },
   ];
@@ -105,7 +103,11 @@ const App = () => {
     <div className="App">
       <Title />
       <p>Welcome to Mystia&apos;s Izakaya</p>
-      <RecipeForm setDlcVersions={setDlcVersions} />
+      <RecipeForm
+        dlcs={DLCS}
+        dlcVersions={dlcVersions}
+        setDlcVersions={setDlcVersions}
+      />
       <tb.Table
         columns={recipeColumns}
         data={recipes}
