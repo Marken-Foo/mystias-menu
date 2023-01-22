@@ -47,7 +47,7 @@ const MatchModeSelector = ({
   setSelectMode,
 }: MatchModeSelectorProps) => {
   return (
-    <>
+    <div>
       <input
         type="radio"
         value={SelectMode.ALL}
@@ -64,7 +64,7 @@ const MatchModeSelector = ({
         name="matchMode"
       />{' '}
       符合至少一个标签
-    </>
+    </div>
   );
 };
 

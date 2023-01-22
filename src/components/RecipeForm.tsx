@@ -1,3 +1,4 @@
+import '@components/RecipeForm.css';
 import { Dlc, DlcChoice, SelectMode } from '@/App'; // types
 import { DlcFormSection } from '@components/DlcFormSection';
 import { TagPicker } from '@components/TagPicker';
@@ -25,7 +26,7 @@ export const RecipeForm = ({
   setSelectMode,
 }: RecipeFormProps) => {
   return (
-    <>
+    <div className="recipeForm">
       <DlcFormSection
         dlcs={dlcs}
         dlcVersions={dlcVersions}
@@ -38,6 +39,6 @@ export const RecipeForm = ({
         selectMode={selectMode}
         setSelectMode={setSelectMode}
       />
-    </>
+    </div>
   );
 };

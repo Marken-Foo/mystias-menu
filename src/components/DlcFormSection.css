@@ -1,0 +1,5 @@
+.dlcFormSection {
+  align-items: flex-start;
+  column-gap: 2em;
+  display: flex;
+}

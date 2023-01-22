@@ -10,7 +10,7 @@ export const CheckboxWithCaption = ({
   label,
 }: CheckboxWithCaptionProps) => {
   return (
-    <span>
+    <span className="checkboxWithCaption">
       {label}
       <input type="checkbox" checked={initialState} onChange={onChange} />
     </span>

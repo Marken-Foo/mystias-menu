@@ -1,3 +1,4 @@
+import '@components/DlcFormSection.css';
 import { Dlc, DlcChoice } from '@/App'; // types
 import { CheckboxWithCaption } from '@components/CheckboxWithCaption';
 
@@ -12,8 +13,8 @@ export const DlcFormSection = ({
   dlcVersions,
   setDlcVersions,
 }: DlcFormSectionProps) => (
-  <>
-    DLCs:
+  <div className="dlcFormSection">
+    <span>持有游戏内容：</span>
     {dlcs.map((dlc) => (
       <CheckboxWithCaption
         initialState={dlcVersions[dlc.name as keyof DlcChoice]}
@@ -27,5 +28,5 @@ export const DlcFormSection = ({
         key={dlc.name}
       />
     ))}
-  </>
+  </div>
 );

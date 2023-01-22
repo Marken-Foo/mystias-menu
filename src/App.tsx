@@ -110,6 +110,7 @@ const App = () => {
         selectMode={selectFoodTagsMode}
         setSelectMode={setSelectFoodTagsMode}
       />
+      <p>---</p>
       <tb.Table
         columns={recipeColumns}
         data={recipes}
