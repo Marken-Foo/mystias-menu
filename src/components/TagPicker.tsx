@@ -1,5 +1,6 @@
 import { SelectMode } from '@/App';
-import { InactiveTag, NeutralTag } from '@components/Tags';
+import { TagPalette } from '@components/TagPalette';
+import { NeutralTag } from '@components/Tags';
 import { Tag } from '@components/Tags'; // types
 
 interface TagPickerProps {
@@ -10,12 +11,6 @@ interface TagPickerProps {
   setSelectMode: React.Dispatch<React.SetStateAction<SelectMode>>;
 }
 
-interface TagSelectorProps {
-  tags: Tag[];
-  selectedTags: Tag[];
-  setSelectedTags: React.Dispatch<React.SetStateAction<Tag[]>>;
-}
-
 const SelectedTagDisplay = ({ tags }: { tags: Tag[] }) => {
   return (
     <div>
@@ -23,32 +18,6 @@ const SelectedTagDisplay = ({ tags }: { tags: Tag[] }) => {
       {tags.map((tag) => (
         <NeutralTag text={tag} key={tag} />
       ))}
-    </div>
-  );
-};
-
-const TagSelector = ({
-  tags,
-  selectedTags,
-  setSelectedTags,
-}: TagSelectorProps) => {
-  const toggleSelection = (tag: Tag) => () => {
-    setSelectedTags((prevState) => {
-      const state = [...prevState];
-      return state.includes(tag)
-        ? state.filter((t) => t !== tag)
-        : state.concat(tag);
-    });
-  };
-  return (
-    <div>
-      {tags.map((tag) => {
-        return selectedTags.includes(tag) ? (
-          <NeutralTag text={tag} key={tag} onClick={toggleSelection(tag)} />
-        ) : (
-          <InactiveTag text={tag} key={tag} onClick={toggleSelection(tag)} />
-        );
-      })}
     </div>
   );
 };
@@ -94,7 +63,7 @@ export const TagPicker = ({
   return (
     <>
       <SelectedTagDisplay tags={selectedTags} />
-      <TagSelector
+      <TagPalette
         tags={tags}
         selectedTags={selectedTags}
         setSelectedTags={setSelectedTags}
