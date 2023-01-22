@@ -1,3 +1,6 @@
+import { useState } from 'react';
+
+import '@components/TagPicker.css';
 import { SelectMode } from '@/App';
 import { TagPalette } from '@components/TagPalette';
 import { NeutralTag } from '@components/Tags';
@@ -14,24 +17,37 @@ interface TagPickerProps {
 const SelectedTagDisplay = ({
   tags,
   setTags,
+  toggleTagPalette,
+  isTagPaletteShown,
 }: {
   tags: Tag[];
-  setTags?: React.Dispatch<React.SetStateAction<Tag[]>>;
+  setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+  toggleTagPalette: () => void;
+  isTagPaletteShown: boolean;
 }) => {
   const removeTag = (tag: Tag) => () => {
-    setTags === undefined
-      ? null
-      : setTags((prevState) => [...prevState].filter((t) => t !== tag));
+    setTags((prevState) => [...prevState].filter((t) => t !== tag));
   };
   return (
     <div>
       所选标签:{' '}
       <span className="tagDisplayField">
-        {tags.length === 0
-          ? '<请选标签>'
-          : tags.map((tag) => (
-              <NeutralTag text={tag} key={tag} onClick={removeTag(tag)} />
-            ))}
+        <span
+          className="tagDisplay"
+          style={{ flex: '1 1', backgroundColor: 'pink' }}
+        >
+          {tags.length === 0
+            ? '<请选标签>'
+            : tags.map((tag) => (
+                <NeutralTag text={tag} key={tag} onClick={removeTag(tag)} />
+              ))}
+        </span>
+        <span
+          className="pickerPlusIcon"
+          onClick={toggleTagPalette}
+        >
+          {isTagPaletteShown ? '⊗' : '⊕'}
+        </span>
       </span>
     </div>
   );
@@ -75,14 +91,25 @@ export const TagPicker = ({
   selectMode,
   setSelectMode,
 }: TagPickerProps) => {
+  const [isTagPaletteShown, setIsTagPaletteShown] = useState(false);
+  const toggleTagPalette = () => {
+    setIsTagPaletteShown(() => !isTagPaletteShown);
+  };
   return (
     <>
-      <SelectedTagDisplay tags={selectedTags} setTags={setSelectedTags} />
-      <TagPalette
-        tags={tags}
-        selectedTags={selectedTags}
-        setSelectedTags={setSelectedTags}
+      <SelectedTagDisplay
+        tags={selectedTags}
+        setTags={setSelectedTags}
+        toggleTagPalette={toggleTagPalette}
+        isTagPaletteShown={isTagPaletteShown}
       />
+      {isTagPaletteShown ? (
+        <TagPalette
+          tags={tags}
+          selectedTags={selectedTags}
+          setSelectedTags={setSelectedTags}
+        />
+      ) : null}
       <MatchModeSelector
         selectMode={selectMode}
         setSelectMode={setSelectMode}
