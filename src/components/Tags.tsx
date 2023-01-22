@@ -1,3 +1,5 @@
+import '@components/Tags.css';
+
 export type Tag = string;
 
 interface TagProps {

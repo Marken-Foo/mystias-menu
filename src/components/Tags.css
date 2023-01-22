@@ -1,0 +1,35 @@
+.badTag {
+  background-color: #333333;
+  border-radius: 12px;
+  color: #f3474d;
+  font-weight: bold;
+  line-height: 200%;
+  margin-right: 4px;
+  padding: 4px 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.inactiveTag {
+  background-color: #dddddd;
+  border-radius: 12px;
+  color: #888888;
+  font-weight: bold;
+  line-height: 200%;
+  margin-right: 4px;
+  padding: 4px 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.neutralTag {
+  background-color: #f0e0ab;
+  border-radius: 12px;
+  color: #af7b11;
+  font-weight: bold;
+  line-height: 200%;
+  margin-right: 4px;
+  padding: 4px 8px;
+  text-align: center;
+  white-space: nowrap;
+}

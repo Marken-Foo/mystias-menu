@@ -11,13 +11,28 @@ interface TagPickerProps {
   setSelectMode: React.Dispatch<React.SetStateAction<SelectMode>>;
 }
 
-const SelectedTagDisplay = ({ tags }: { tags: Tag[] }) => {
+const SelectedTagDisplay = ({
+  tags,
+  setTags,
+}: {
+  tags: Tag[];
+  setTags?: React.Dispatch<React.SetStateAction<Tag[]>>;
+}) => {
+  const removeTag = (tag: Tag) => () => {
+    setTags === undefined
+      ? null
+      : setTags((prevState) => [...prevState].filter((t) => t !== tag));
+  };
   return (
     <div>
       所选标签:{' '}
-      {tags.map((tag) => (
-        <NeutralTag text={tag} key={tag} />
-      ))}
+      <span className="tagDisplayField">
+        {tags.length === 0
+          ? '<请选标签>'
+          : tags.map((tag) => (
+              <NeutralTag text={tag} key={tag} onClick={removeTag(tag)} />
+            ))}
+      </span>
     </div>
   );
 };
@@ -40,7 +55,7 @@ const MatchModeSelector = ({
         onChange={() => setSelectMode(() => SelectMode.ALL)}
         name="matchMode"
       />{' '}
-      匹配所有标签
+      符合所有标签
       <input
         type="radio"
         value={SelectMode.AT_LEAST_ONE}
@@ -48,7 +63,7 @@ const MatchModeSelector = ({
         onChange={() => setSelectMode(() => SelectMode.AT_LEAST_ONE)}
         name="matchMode"
       />{' '}
-      匹配至少一个标签
+      符合至少一个标签
     </>
   );
 };
@@ -62,7 +77,7 @@ export const TagPicker = ({
 }: TagPickerProps) => {
   return (
     <>
-      <SelectedTagDisplay tags={selectedTags} />
+      <SelectedTagDisplay tags={selectedTags} setTags={setSelectedTags} />
       <TagPalette
         tags={tags}
         selectedTags={selectedTags}
