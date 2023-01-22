@@ -1,8 +1,7 @@
+import { Dlc, DlcChoice, SelectMode } from '@/App'; // types
 import { CheckboxWithCaption } from '@components/CheckboxWithCaption';
 import { TagPicker } from '@components/TagPicker';
-
-import { Dlc, DlcChoice, SelectMode } from '@/App'; // Only types, otherwise cyclic
-import { Tag } from '@components/Tags';
+import { Tag } from '@components/Tags'; // types
 
 interface DlcFormSectionProps {
   dlcs: Dlc[];

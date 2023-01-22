@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
+
 import { Recipe } from '@/interfaces/DataInterfaces';
 import { RECIPE_COLUMNS } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
-import * as tb from '@components/table/Table';
+import { Tag } from '@components/Tags'; // types
 import { Title } from '@components/Title';
+import * as tb from '@components/table/Table';
 import '@/App.css';
-
-import { Tag } from './components/Tags';
 
 const RECIPES_URI = '/recipes.json';
 const FOOD_TAGS_URI = '/foodTags.json';

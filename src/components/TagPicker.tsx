@@ -1,7 +1,6 @@
-import { InactiveTag, NeutralTag } from '@components/Tags';
-
 import { SelectMode } from '@/App';
-import { Tag } from '@components/Tags';
+import { InactiveTag, NeutralTag } from '@components/Tags';
+import { Tag } from '@components/Tags'; // types
 
 interface TagPickerProps {
   tags: Tag[];
