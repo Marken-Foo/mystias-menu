@@ -1,5 +1,5 @@
-import { Tag, TagType } from '@components/Tags';
-import { TagText } from '@components/Tags'; // types
+import { Tag, TagType } from '@/components/Tag';
+import { TagText } from '@/components/Tag'; // types
 
 interface TagPaletteProps {
   tags: TagText[];

@@ -1,8 +1,8 @@
 import '@components/RecipeForm.css';
 import { Dlc, DlcChoice, SelectMode } from '@/App'; // types
+import { TagText } from '@/components/Tag'; // types
 import { DlcFormSection } from '@components/DlcFormSection';
 import { TagPicker } from '@components/TagPicker';
-import { TagText } from '@components/Tags'; // types
 
 interface RecipeFormProps {
   dlcs: Dlc[];

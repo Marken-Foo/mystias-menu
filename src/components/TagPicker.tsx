@@ -2,10 +2,10 @@ import { useState } from 'react';
 
 import '@components/TagPicker.css';
 import { SelectMode } from '@/App';
+import { Tag, TagType } from '@/components/Tag';
+import { TagText } from '@/components/Tag'; // types
 import { RadioButtonWithCaption } from '@components/RadioButtonWithCaption';
 import { TagPalette } from '@components/TagPalette';
-import { Tag, TagType } from '@components/Tags';
-import { TagText } from '@components/Tags'; // types
 
 type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 

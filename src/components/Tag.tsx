@@ -1,4 +1,4 @@
-import '@components/Tags.css';
+import '@components/Tag.css';
 
 export type TagText = string;
 

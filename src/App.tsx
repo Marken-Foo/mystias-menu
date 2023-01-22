@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
+import { TagText } from '@/components/Tag'; // types
 import { Recipe } from '@/interfaces/DataInterfaces';
 import { RECIPE_COLUMNS } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
-import { TagText } from '@components/Tags'; // types
 import { Title } from '@components/Title';
 import * as tb from '@components/table/Table';
 import '@/App.css';
