@@ -10,10 +10,10 @@
   white-space: nowrap;
 }
 
-.inactiveTag {
-  background-color: #dddddd;
+.foodTag {
+  background-color: #f0e0ab;
   border-radius: 12px;
-  color: #888888;
+  color: #af7b11;
   font-weight: bold;
   line-height: 200%;
   margin-right: 4px;
@@ -22,10 +22,10 @@
   white-space: nowrap;
 }
 
-.neutralTag {
-  background-color: #f0e0ab;
+.inactiveTag {
+  background-color: #dddddd;
   border-radius: 12px;
-  color: #af7b11;
+  color: #888888;
   font-weight: bold;
   line-height: 200%;
   margin-right: 4px;

@@ -1,4 +1,4 @@
-import { InactiveTag, NeutralTag } from '@components/Tags';
+import { Tag, TagType } from '@components/Tags';
 import { TagText } from '@components/Tags'; // types
 
 interface TagPaletteProps {
@@ -24,9 +24,19 @@ export const TagPalette = ({
     <div className="tagPalette">
       {tags.map((tag) => {
         return selectedTags.includes(tag) ? (
-          <NeutralTag text={tag} key={tag} onClick={toggleSelection(tag)} />
+          <Tag
+            type={TagType.FOOD}
+            text={tag}
+            key={tag}
+            onClick={toggleSelection(tag)}
+          />
         ) : (
-          <InactiveTag text={tag} key={tag} onClick={toggleSelection(tag)} />
+          <Tag
+            type={TagType.INACTIVE}
+            text={tag}
+            key={tag}
+            onClick={toggleSelection(tag)}
+          />
         );
       })}
     </div>

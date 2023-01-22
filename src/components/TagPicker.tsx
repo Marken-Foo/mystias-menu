@@ -4,7 +4,7 @@ import '@components/TagPicker.css';
 import { SelectMode } from '@/App';
 import { RadioButtonWithCaption } from '@components/RadioButtonWithCaption';
 import { TagPalette } from '@components/TagPalette';
-import { NeutralTag } from '@components/Tags';
+import { Tag, TagType } from '@components/Tags';
 import { TagText } from '@components/Tags'; // types
 
 type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
@@ -31,7 +31,12 @@ const SelectedTagDisplay = ({
         {tags.length === 0
           ? '<请选标签>'
           : tags.map((tag) => (
-              <NeutralTag text={tag} key={tag} onClick={removeTag(tag)} />
+              <Tag
+                type={TagType.FOOD}
+                text={tag}
+                key={tag}
+                onClick={removeTag(tag)}
+              />
             ))}
       </span>
       <span className="pickerPlusIcon" onClick={toggleTagPalette}>
