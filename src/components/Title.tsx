@@ -1,3 +1,3 @@
-export const Title = () => {
-  return <h1>夜雀料理</h1>;
+export const Title = ({ text }: { text: string }) => {
+  return <h1 className="pageTitle">{text}</h1>;
 };

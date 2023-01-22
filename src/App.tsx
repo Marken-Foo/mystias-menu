@@ -98,7 +98,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Title />
+      <Title text={'夜雀料理'} />
       <p>Welcome to Mystia&apos;s Izakaya</p>
       <RecipeForm
         dlcs={DLCS}

@@ -7,7 +7,7 @@ import {
   DisplayFunctionCollection,
   SortFunction,
 } from './TableInterfaces';
-import { TableRow } from './TableRow';
+import { EmptyRow, TableRow } from './TableRow';
 
 export type { Column };
 
@@ -109,25 +109,22 @@ export const Table = <T extends Data>({
     return;
   };
 
-  if (displayData.length === 0) {
-    return <>No table data</>;
-  }
   return (
     <table>
-      <TableHeader
-        headerData={headerData}
-        // sortTable={sortTable}
-        sortByField={sortByField}
-      />
+      <TableHeader headerData={headerData} sortByField={sortByField} />
       <tbody>
-        {displayData.map((row) => (
-          <TableRow
-            rowData={row}
-            accessors={accessors}
-            displayFunctions={displayFunctions}
-            key={rowIdFunction(row)}
-          />
-        ))}
+        {displayData.length === 0 ? (
+          <EmptyRow accessors={accessors} />
+        ) : (
+          displayData.map((row) => (
+            <TableRow
+              rowData={row}
+              accessors={accessors}
+              displayFunctions={displayFunctions}
+              key={rowIdFunction(row)}
+            />
+          ))
+        )}
       </tbody>
     </table>
   );
