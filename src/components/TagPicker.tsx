@@ -5,13 +5,13 @@ import { SelectMode } from '@/App';
 import { RadioButtonWithCaption } from '@components/RadioButtonWithCaption';
 import { TagPalette } from '@components/TagPalette';
 import { NeutralTag } from '@components/Tags';
-import { Tag } from '@components/Tags'; // types
+import { TagText } from '@components/Tags'; // types
 
 type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 
 interface SelectedTagDisplayProps {
-  tags: Tag[];
-  setTags: StateSetter<Tag[]>;
+  tags: TagText[];
+  setTags: StateSetter<TagText[]>;
   toggleTagPalette: () => void;
   isTagPaletteShown: boolean;
 }
@@ -22,7 +22,7 @@ const SelectedTagDisplay = ({
   toggleTagPalette,
   isTagPaletteShown,
 }: SelectedTagDisplayProps) => {
-  const removeTag = (tag: Tag) => () => {
+  const removeTag = (tag: TagText) => () => {
     setTags((prevState) => [...prevState].filter((t) => t !== tag));
   };
   return (
@@ -71,9 +71,9 @@ const MatchModeSelector = ({
 };
 
 interface TagPickerProps {
-  tags: Tag[];
-  selectedTags: Tag[];
-  setSelectedTags: StateSetter<Tag[]>;
+  tags: TagText[];
+  selectedTags: TagText[];
+  setSelectedTags: StateSetter<TagText[]>;
   selectMode: SelectMode;
   setSelectMode: StateSetter<SelectMode>;
 }

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Recipe } from '@/interfaces/DataInterfaces';
 import { RECIPE_COLUMNS } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
-import { Tag } from '@components/Tags'; // types
+import { TagText } from '@components/Tags'; // types
 import { Title } from '@components/Title';
 import * as tb from '@components/table/Table';
 import '@/App.css';
@@ -43,8 +43,8 @@ const App = () => {
   );
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [recipeColumns] = useState<tb.Column<Recipe>[]>(RECIPE_COLUMNS);
-  const [foodTags, setFoodTags] = useState<Tag[]>([]);
-  const [selectedFoodTags, setSelectedFoodTags] = useState<Tag[]>([]);
+  const [foodTags, setFoodTags] = useState<TagText[]>([]);
+  const [selectedFoodTags, setSelectedFoodTags] = useState<TagText[]>([]);
   const [selectFoodTagsMode, setSelectFoodTagsMode] = useState<SelectMode>(
     SelectMode.ALL
   );
@@ -63,7 +63,7 @@ const App = () => {
   useEffect(() => {
     const loadFoodTags = async () => {
       const res = await fetch(FOOD_TAGS_URI);
-      const data: Tag[] = await res.json();
+      const data: TagText[] = await res.json();
       setFoodTags(data);
     };
     loadFoodTags();

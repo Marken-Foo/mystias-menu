@@ -1,10 +1,10 @@
 import { InactiveTag, NeutralTag } from '@components/Tags';
-import { Tag } from '@components/Tags'; // types
+import { TagText } from '@components/Tags'; // types
 
 interface TagPaletteProps {
-  tags: Tag[];
-  selectedTags: Tag[];
-  setSelectedTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+  tags: TagText[];
+  selectedTags: TagText[];
+  setSelectedTags: React.Dispatch<React.SetStateAction<TagText[]>>;
 }
 
 export const TagPalette = ({
@@ -12,7 +12,7 @@ export const TagPalette = ({
   selectedTags,
   setSelectedTags,
 }: TagPaletteProps) => {
-  const toggleSelection = (tag: Tag) => () => {
+  const toggleSelection = (tag: TagText) => () => {
     setSelectedTags((prevState) => {
       const state = [...prevState];
       return state.includes(tag)

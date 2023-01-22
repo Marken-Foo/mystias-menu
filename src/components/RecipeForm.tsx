@@ -2,15 +2,15 @@ import '@components/RecipeForm.css';
 import { Dlc, DlcChoice, SelectMode } from '@/App'; // types
 import { DlcFormSection } from '@components/DlcFormSection';
 import { TagPicker } from '@components/TagPicker';
-import { Tag } from '@components/Tags'; // types
+import { TagText } from '@components/Tags'; // types
 
 interface RecipeFormProps {
   dlcs: Dlc[];
   dlcVersions: DlcChoice;
   setDlcVersions: React.Dispatch<React.SetStateAction<DlcChoice>>;
-  tags: Tag[];
-  selectedTags: Tag[];
-  setSelectedTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+  tags: TagText[];
+  selectedTags: TagText[];
+  setSelectedTags: React.Dispatch<React.SetStateAction<TagText[]>>;
   selectMode: SelectMode;
   setSelectMode: React.Dispatch<React.SetStateAction<SelectMode>>;
 }

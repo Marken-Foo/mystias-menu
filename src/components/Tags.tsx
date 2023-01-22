@@ -1,6 +1,14 @@
 import '@components/Tags.css';
 
-export type Tag = string;
+export type TagText = string;
+
+export enum TagType {
+  FOOD = 'foodTag',
+  DRINK = 'drinkTag',
+  GOOD = 'goodTag',
+  BAD = 'badTag',
+  INACTIVE = 'inactiveTag',
+}
 
 interface TagProps {
   text: string;
