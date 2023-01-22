@@ -4,6 +4,10 @@
   padding: 2rem;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .pageTitle {
   text-align: left;
 }

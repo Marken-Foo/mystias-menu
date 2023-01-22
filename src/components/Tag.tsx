@@ -16,6 +16,18 @@ interface TagProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
+const withClickable = (TagComponent: typeof Tag) => {
+  const Tag = (props: TagProps) => {
+    const { type, ...rest } = props;
+    const newProps = {
+      ...rest,
+      type: `clickable ${type}` as TagText,
+    } as TagProps;
+    return <TagComponent {...newProps} />;
+  };
+  return Tag;
+};
+
 export const Tag = ({ text, type, onClick }: TagProps) => {
   return (
     <span className={type} onClick={onClick}>
@@ -23,3 +35,5 @@ export const Tag = ({ text, type, onClick }: TagProps) => {
     </span>
   );
 };
+
+export const ClickableTag = withClickable(Tag);

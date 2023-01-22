@@ -1,4 +1,4 @@
-import { Tag, TagType } from '@/components/Tag';
+import { ClickableTag, TagType } from '@/components/Tag';
 import { TagText } from '@/components/Tag'; // types
 
 interface TagPaletteProps {
@@ -24,14 +24,14 @@ export const TagPalette = ({
     <div className="tagPalette">
       {tags.map((tag) => {
         return selectedTags.includes(tag) ? (
-          <Tag
+          <ClickableTag
             type={TagType.FOOD}
             text={tag}
             key={tag}
             onClick={toggleSelection(tag)}
           />
         ) : (
-          <Tag
+          <ClickableTag
             type={TagType.INACTIVE}
             text={tag}
             key={tag}

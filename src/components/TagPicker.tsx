@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import '@components/TagPicker.css';
 import { SelectMode } from '@/App';
-import { Tag, TagType } from '@/components/Tag';
+import { ClickableTag, TagType } from '@/components/Tag';
 import { TagText } from '@/components/Tag'; // types
 import { RadioButtonWithCaption } from '@components/RadioButtonWithCaption';
 import { TagPalette } from '@components/TagPalette';
@@ -31,7 +31,7 @@ const SelectedTagDisplay = ({
         {tags.length === 0
           ? '<请选标签>'
           : tags.map((tag) => (
-              <Tag
+              <ClickableTag
                 type={TagType.FOOD}
                 text={tag}
                 key={tag}

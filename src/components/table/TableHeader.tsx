@@ -16,11 +16,11 @@ export const TableHeader = <T extends Data>({
           <th
             key={header.accessor}
             onClick={
-              header.isSortable === true
-                ? () => sortByField(header.accessor)
-                : undefined
+              header.isSortable ? () => sortByField(header.accessor) : undefined
             }
-            className={'tableHeader'}
+            className={
+              header.isSortable ? 'clickable tableHeader' : 'tableHeader'
+            }
           >
             {header.label}
           </th>

@@ -1,8 +1,8 @@
+import { Tag, TagType } from '@/components/Tag';
 import { Recipe } from '@/interfaces/DataInterfaces';
 import { sortFunctionOnField } from '@/utils';
 import { GameAssetIcon } from '@components/GameAssetIcon';
 import { Ingredient } from '@components/Ingredient';
-import { Tag, TagType } from '@/components/Tag';
 import { Column } from '@components/table/Table';
 
 const RecipeIconDisplay = ({ name }: { name: string }) => (
