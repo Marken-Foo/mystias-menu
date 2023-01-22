@@ -18,14 +18,3 @@
   max-width: 300px;
   text-align: center;
 }
-
-.tagDisplayField {
-  border: 2px solid #000000;
-  border-radius: 7px;
-  display: inline-flex;
-  line-height: 200%;
-  min-width: 350px;
-  max-width: 350px;
-  padding: 0px 0.5em;
-  text-align: left;
-}

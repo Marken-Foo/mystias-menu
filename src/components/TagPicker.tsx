@@ -6,12 +6,14 @@ import { TagPalette } from '@components/TagPalette';
 import { NeutralTag } from '@components/Tags';
 import { Tag } from '@components/Tags'; // types
 
+type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
+
 interface TagPickerProps {
   tags: Tag[];
   selectedTags: Tag[];
-  setSelectedTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+  setSelectedTags: StateSetter<Tag[]>;
   selectMode: SelectMode;
-  setSelectMode: React.Dispatch<React.SetStateAction<SelectMode>>;
+  setSelectMode: StateSetter<SelectMode>;
 }
 
 const SelectedTagDisplay = ({
@@ -21,7 +23,7 @@ const SelectedTagDisplay = ({
   isTagPaletteShown,
 }: {
   tags: Tag[];
-  setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+  setTags: StateSetter<Tag[]>;
   toggleTagPalette: () => void;
   isTagPaletteShown: boolean;
 }) => {
@@ -29,57 +31,77 @@ const SelectedTagDisplay = ({
     setTags((prevState) => [...prevState].filter((t) => t !== tag));
   };
   return (
-    <div>
-      所选标签:{' '}
-      <span className="tagDisplayField">
-        <span
-          className="tagDisplay"
-          style={{ flex: '1 1', backgroundColor: 'pink' }}
-        >
-          {tags.length === 0
-            ? '<请选标签>'
-            : tags.map((tag) => (
-                <NeutralTag text={tag} key={tag} onClick={removeTag(tag)} />
-              ))}
-        </span>
-        <span
-          className="pickerPlusIcon"
-          onClick={toggleTagPalette}
-        >
-          {isTagPaletteShown ? '⊗' : '⊕'}
-        </span>
+    <span className="tagDisplayField">
+      <span className="tagDisplay">
+        {tags.length === 0
+          ? '<请选标签>'
+          : tags.map((tag) => (
+              <NeutralTag text={tag} key={tag} onClick={removeTag(tag)} />
+            ))}
       </span>
-    </div>
+      <span className="pickerPlusIcon" onClick={toggleTagPalette}>
+        {isTagPaletteShown ? '⊗' : '⊕'}
+      </span>
+    </span>
   );
 };
 
 interface MatchModeSelectorProps {
   selectMode: SelectMode;
-  setSelectMode: React.Dispatch<React.SetStateAction<SelectMode>>;
+  setSelectMode: StateSetter<SelectMode>;
 }
+
+type RadioValue = string | number | readonly string[] | undefined;
+
+interface RadioButtonWithCaptionProps<T extends RadioValue> {
+  name: string;
+  value: T;
+  state: T;
+  setState: StateSetter<T>;
+  caption: string;
+}
+
+const RadioButtonWithCaption = <T extends RadioValue>({
+  name,
+  value,
+  state,
+  setState,
+  caption,
+}: RadioButtonWithCaptionProps<T>) => {
+  return (
+    <div>
+      <input
+        type="radio"
+        value={value}
+        checked={state === value}
+        onChange={() => setState(() => value)}
+        name={name}
+      />
+      {caption}
+    </div>
+  );
+};
 
 const MatchModeSelector = ({
   selectMode,
   setSelectMode,
 }: MatchModeSelectorProps) => {
+  const input = [
+    { value: SelectMode.ALL, caption: '符合所有标签' },
+    { value: SelectMode.AT_LEAST_ONE, caption: '符合至少一个标签' },
+  ];
   return (
-    <div>
-      <input
-        type="radio"
-        value={SelectMode.ALL}
-        checked={selectMode === SelectMode.ALL}
-        onChange={() => setSelectMode(() => SelectMode.ALL)}
-        name="matchMode"
-      />{' '}
-      符合所有标签
-      <input
-        type="radio"
-        value={SelectMode.AT_LEAST_ONE}
-        checked={selectMode === SelectMode.AT_LEAST_ONE}
-        onChange={() => setSelectMode(() => SelectMode.AT_LEAST_ONE)}
-        name="matchMode"
-      />{' '}
-      符合至少一个标签
+    <div className="verticalRadioButtons">
+      {input.map((item) => (
+        <RadioButtonWithCaption
+          name={'matchMode'}
+          value={item.value}
+          state={selectMode}
+          setState={setSelectMode}
+          caption={item.caption}
+          key={item.value}
+        />
+      ))}
     </div>
   );
 };
@@ -96,13 +118,20 @@ export const TagPicker = ({
     setIsTagPaletteShown(() => !isTagPaletteShown);
   };
   return (
-    <>
-      <SelectedTagDisplay
-        tags={selectedTags}
-        setTags={setSelectedTags}
-        toggleTagPalette={toggleTagPalette}
-        isTagPaletteShown={isTagPaletteShown}
-      />
+    <div className="tagPicker">
+      <div className="tagInputs">
+        <span>所选标签：</span>
+        <SelectedTagDisplay
+          tags={selectedTags}
+          setTags={setSelectedTags}
+          toggleTagPalette={toggleTagPalette}
+          isTagPaletteShown={isTagPaletteShown}
+        />
+        <MatchModeSelector
+          selectMode={selectMode}
+          setSelectMode={setSelectMode}
+        />
+      </div>
       {isTagPaletteShown ? (
         <TagPalette
           tags={tags}
@@ -110,10 +139,6 @@ export const TagPicker = ({
           setSelectedTags={setSelectedTags}
         />
       ) : null}
-      <MatchModeSelector
-        selectMode={selectMode}
-        setSelectMode={setSelectMode}
-      />
-    </>
+    </div>
   );
 };

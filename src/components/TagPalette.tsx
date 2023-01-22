@@ -21,7 +21,7 @@ export const TagPalette = ({
     });
   };
   return (
-    <div>
+    <div className="tagPalette">
       {tags.map((tag) => {
         return selectedTags.includes(tag) ? (
           <NeutralTag text={tag} key={tag} onClick={toggleSelection(tag)} />
