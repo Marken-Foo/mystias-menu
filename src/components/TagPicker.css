@@ -34,7 +34,7 @@
 
 .tagPalette {
   flex-basis: auto;
-  max-width: 800px;
+  max-width: min(800px, 80vw);
   padding: 0.5em 0;
   text-align: center;
 }

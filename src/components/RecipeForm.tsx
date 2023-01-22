@@ -32,13 +32,16 @@ export const RecipeForm = ({
         dlcVersions={dlcVersions}
         setDlcVersions={setDlcVersions}
       />
-      <TagPicker
-        tags={tags}
-        selectedTags={selectedTags}
-        setSelectedTags={setSelectedTags}
-        selectMode={selectMode}
-        setSelectMode={setSelectMode}
-      />
+      <div>
+        <span>正特性筛选：</span>
+        <TagPicker
+          tags={tags}
+          selectedTags={selectedTags}
+          setSelectedTags={setSelectedTags}
+          selectMode={selectMode}
+          setSelectMode={setSelectMode}
+        />
+      </div>
     </div>
   );
 };

@@ -9,12 +9,11 @@ import { Tag } from '@components/Tags'; // types
 
 type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 
-interface TagPickerProps {
+interface SelectedTagDisplayProps {
   tags: Tag[];
-  selectedTags: Tag[];
-  setSelectedTags: StateSetter<Tag[]>;
-  selectMode: SelectMode;
-  setSelectMode: StateSetter<SelectMode>;
+  setTags: StateSetter<Tag[]>;
+  toggleTagPalette: () => void;
+  isTagPaletteShown: boolean;
 }
 
 const SelectedTagDisplay = ({
@@ -22,12 +21,7 @@ const SelectedTagDisplay = ({
   setTags,
   toggleTagPalette,
   isTagPaletteShown,
-}: {
-  tags: Tag[];
-  setTags: StateSetter<Tag[]>;
-  toggleTagPalette: () => void;
-  isTagPaletteShown: boolean;
-}) => {
+}: SelectedTagDisplayProps) => {
   const removeTag = (tag: Tag) => () => {
     setTags((prevState) => [...prevState].filter((t) => t !== tag));
   };
@@ -76,6 +70,14 @@ const MatchModeSelector = ({
   );
 };
 
+interface TagPickerProps {
+  tags: Tag[];
+  selectedTags: Tag[];
+  setSelectedTags: StateSetter<Tag[]>;
+  selectMode: SelectMode;
+  setSelectMode: StateSetter<SelectMode>;
+}
+
 export const TagPicker = ({
   tags,
   selectedTags,
@@ -90,7 +92,6 @@ export const TagPicker = ({
   return (
     <div className="tagPicker">
       <div className="tagInputs">
-        <span>所选标签：</span>
         <SelectedTagDisplay
           tags={selectedTags}
           setTags={setSelectedTags}
