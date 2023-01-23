@@ -1,8 +1,38 @@
 import '@components/RecipeForm.css';
+import { RadioButtonWithCaption } from './RadioButtonWithCaption';
 import { Dlc, DlcChoice, SelectMode } from '@/App'; // types
-import { TagText } from '@/components/Tag'; // types
 import { DlcFormSection } from '@components/DlcFormSection';
+import { TagText } from '@components/Tag'; // types
 import { TagPicker } from '@components/TagPicker';
+
+interface MatchModeSelectorProps {
+  selectMode: SelectMode;
+  setSelectMode: React.Dispatch<React.SetStateAction<SelectMode>>;
+}
+
+const MatchModeSelector = ({
+  selectMode,
+  setSelectMode,
+}: MatchModeSelectorProps) => {
+  const input = [
+    { value: SelectMode.ALL, caption: '符合所有标签' },
+    { value: SelectMode.AT_LEAST_ONE, caption: '符合至少一个标签' },
+  ];
+  return (
+    <div className="verticalRadioButtons">
+      {input.map((item) => (
+        <RadioButtonWithCaption
+          name={'matchMode'}
+          value={item.value}
+          state={selectMode}
+          setState={setSelectMode}
+          caption={item.caption}
+          key={item.value}
+        />
+      ))}
+    </div>
+  );
+};
 
 interface RecipeFormProps {
   dlcs: Dlc[];
@@ -32,12 +62,14 @@ export const RecipeForm = ({
         dlcVersions={dlcVersions}
         setDlcVersions={setDlcVersions}
       />
-      <div>
-        <span>正特性筛选：</span>
+      <div className="tagSection">
+        <span className="positiveTagsLabel">正特性筛选：</span>
         <TagPicker
           tags={tags}
           selectedTags={selectedTags}
           setSelectedTags={setSelectedTags}
+        />
+        <MatchModeSelector
           selectMode={selectMode}
           setSelectMode={setSelectMode}
         />

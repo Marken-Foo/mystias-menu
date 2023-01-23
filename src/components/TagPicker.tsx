@@ -1,10 +1,8 @@
 import { useState } from 'react';
 
 import '@components/TagPicker.css';
-import { SelectMode } from '@/App';
 import { ClickableTag, TagType } from '@/components/Tag';
 import { TagText } from '@/components/Tag'; // types
-import { RadioButtonWithCaption } from '@components/RadioButtonWithCaption';
 import { TagPalette } from '@components/TagPalette';
 
 type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
@@ -46,49 +44,16 @@ const SelectedTagDisplay = ({
   );
 };
 
-interface MatchModeSelectorProps {
-  selectMode: SelectMode;
-  setSelectMode: StateSetter<SelectMode>;
-}
-
-const MatchModeSelector = ({
-  selectMode,
-  setSelectMode,
-}: MatchModeSelectorProps) => {
-  const input = [
-    { value: SelectMode.ALL, caption: '符合所有标签' },
-    { value: SelectMode.AT_LEAST_ONE, caption: '符合至少一个标签' },
-  ];
-  return (
-    <div className="verticalRadioButtons">
-      {input.map((item) => (
-        <RadioButtonWithCaption
-          name={'matchMode'}
-          value={item.value}
-          state={selectMode}
-          setState={setSelectMode}
-          caption={item.caption}
-          key={item.value}
-        />
-      ))}
-    </div>
-  );
-};
-
 interface TagPickerProps {
   tags: TagText[];
   selectedTags: TagText[];
   setSelectedTags: StateSetter<TagText[]>;
-  selectMode: SelectMode;
-  setSelectMode: StateSetter<SelectMode>;
 }
 
 export const TagPicker = ({
   tags,
   selectedTags,
   setSelectedTags,
-  selectMode,
-  setSelectMode,
 }: TagPickerProps) => {
   const [isTagPaletteShown, setIsTagPaletteShown] = useState(false);
   const toggleTagPalette = () => {
@@ -96,18 +61,12 @@ export const TagPicker = ({
   };
   return (
     <div className="tagPicker">
-      <div className="tagInputs">
-        <SelectedTagDisplay
-          tags={selectedTags}
-          setTags={setSelectedTags}
-          toggleTagPalette={toggleTagPalette}
-          isTagPaletteShown={isTagPaletteShown}
-        />
-        <MatchModeSelector
-          selectMode={selectMode}
-          setSelectMode={setSelectMode}
-        />
-      </div>
+      <SelectedTagDisplay
+        tags={selectedTags}
+        setTags={setSelectedTags}
+        toggleTagPalette={toggleTagPalette}
+        isTagPaletteShown={isTagPaletteShown}
+      />
       {isTagPaletteShown ? (
         <TagPalette
           tags={tags}
