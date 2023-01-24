@@ -1,6 +1,11 @@
 import { GameAssetIcon } from '@components/GameAssetIcon';
 
-export const Ingredient = ({ name, imageSource }) => {
+interface IngredientProps {
+  name: string;
+  imageSource: string;
+}
+
+export const Ingredient = ({ name, imageSource }: IngredientProps) => {
   return (
     <div style={{ display: 'inline-block' }}>
       <GameAssetIcon src={imageSource} name={name} />
