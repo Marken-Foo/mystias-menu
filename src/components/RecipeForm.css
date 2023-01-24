@@ -1,13 +1,13 @@
-.positiveTagsLabel {
-  align-self: flex-start;
-  line-height: 200%;
-  border: 2px solid transparent;
-}
-
 .recipeForm {
   display: flex;
   flex-direction: column;
   row-gap: 1em;
+}
+
+.tagsLabel {
+  align-self: flex-start;
+  line-height: 200%;
+  border: 2px solid transparent;
 }
 
 .tagSection {

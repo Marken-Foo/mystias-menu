@@ -43,6 +43,8 @@ interface RecipeFormProps {
   setSelectedTags: React.Dispatch<React.SetStateAction<TagText[]>>;
   selectMode: SelectMode;
   setSelectMode: React.Dispatch<React.SetStateAction<SelectMode>>;
+  selectedIncompatibleTags: TagText[];
+  setSelectedIncompatibleTags: React.Dispatch<React.SetStateAction<TagText[]>>;
 }
 
 export const RecipeForm = ({
@@ -54,6 +56,8 @@ export const RecipeForm = ({
   setSelectedTags,
   selectMode,
   setSelectMode,
+  selectedIncompatibleTags,
+  setSelectedIncompatibleTags
 }: RecipeFormProps) => {
   return (
     <div className="recipeForm">
@@ -63,7 +67,7 @@ export const RecipeForm = ({
         setDlcVersions={setDlcVersions}
       />
       <div className="tagSection">
-        <span className="positiveTagsLabel">正特性筛选：</span>
+        <span className="tagsLabel">正特性筛选：</span>
         <TagPicker
           tags={tags}
           selectedTags={selectedTags}
@@ -72,6 +76,14 @@ export const RecipeForm = ({
         <MatchModeSelector
           selectMode={selectMode}
           setSelectMode={setSelectMode}
+        />
+      </div>
+      <div className="tagSection">
+        <span className="tagsLabel">负特性筛选：</span>
+        <TagPicker
+          tags={tags}
+          selectedTags={selectedIncompatibleTags}
+          setSelectedTags={setSelectedIncompatibleTags}
         />
       </div>
     </div>
