@@ -81,7 +81,7 @@ export const Table = <T extends Data>({
     setDisplayData(filteredData);
     // sort the table with the new data
     sortTable(sortField, sortOrder, filteredData);
-  }, [filterFunctions]);
+  }, [allData, filterFunctions]);
 
   const sortByField = (accessor: string) => {
     const order =
