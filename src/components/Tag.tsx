@@ -8,6 +8,7 @@ export enum TagType {
   GOOD = 'goodTag',
   BAD = 'badTag',
   INACTIVE = 'inactiveTag',
+  STRIKETHROUGH = 'strikethroughTag',
 }
 
 interface TagProps {

@@ -50,6 +50,7 @@ const App = () => {
   );
   const [selectedIncompatibleFoodTags, setSelectedIncompatibleFoodTags] =
     useState<TagText[]>([]);
+  const [unwantedFoodTags, setUnwantedFoodTags] = useState<TagText[]>([]);
 
   // Load recipes
   useEffect(() => {
@@ -93,6 +94,10 @@ const App = () => {
     );
   };
 
+  const filterRecipeByUnwantedTags = (recipe: Recipe) => {
+    return unwantedFoodTags.every((tag) => !recipe.tags.includes(tag));
+  };
+
   const filterByTagFunctions = {
     [SelectMode.ALL]: filterRecipeByAllTags,
     [SelectMode.AT_LEAST_ONE]: filterRecipeBySomeTag,
@@ -102,6 +107,7 @@ const App = () => {
     filterRecipeByDlc,
     filterByTagFunctions[selectFoodTagsMode],
     filterRecipeByIncompatibleTags,
+    filterRecipeByUnwantedTags,
   ];
   const rowIdFunction = (recipe: Recipe) => recipe.name;
 
@@ -120,6 +126,8 @@ const App = () => {
         setSelectMode={setSelectFoodTagsMode}
         selectedIncompatibleTags={selectedIncompatibleFoodTags}
         setSelectedIncompatibleTags={setSelectedIncompatibleFoodTags}
+        unwantedTags={unwantedFoodTags}
+        setUnwantedTags={setUnwantedFoodTags}
       />
       <p>---</p>
       <tb.Table
