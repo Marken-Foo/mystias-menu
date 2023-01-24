@@ -10,6 +10,7 @@ type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 interface SelectedTagDisplayProps {
   tags: TagText[];
   setTags: StateSetter<TagText[]>;
+  tagType: TagType;
   toggleTagPalette: () => void;
   isTagPaletteShown: boolean;
 }
@@ -17,6 +18,7 @@ interface SelectedTagDisplayProps {
 const SelectedTagDisplay = ({
   tags,
   setTags,
+  tagType,
   toggleTagPalette,
   isTagPaletteShown,
 }: SelectedTagDisplayProps) => {
@@ -30,8 +32,8 @@ const SelectedTagDisplay = ({
           ? '<请选标签>'
           : tags.map((tag) => (
               <ClickableTag
-                type={TagType.FOOD}
-                text={tag}
+                type={tagType}
+                text={`${tag}⨯`}
                 key={tag}
                 onClick={removeTag(tag)}
               />
@@ -48,12 +50,14 @@ interface TagPickerProps {
   tags: TagText[];
   selectedTags: TagText[];
   setSelectedTags: StateSetter<TagText[]>;
+  tagType: TagType;
 }
 
 export const TagPicker = ({
   tags,
   selectedTags,
   setSelectedTags,
+  tagType,
 }: TagPickerProps) => {
   const [isTagPaletteShown, setIsTagPaletteShown] = useState(false);
   const toggleTagPalette = () => {
@@ -64,6 +68,7 @@ export const TagPicker = ({
       <SelectedTagDisplay
         tags={selectedTags}
         setTags={setSelectedTags}
+        tagType={tagType}
         toggleTagPalette={toggleTagPalette}
         isTagPaletteShown={isTagPaletteShown}
       />
@@ -72,6 +77,7 @@ export const TagPicker = ({
           tags={tags}
           selectedTags={selectedTags}
           setSelectedTags={setSelectedTags}
+          tagType={tagType}
         />
       ) : null}
     </div>

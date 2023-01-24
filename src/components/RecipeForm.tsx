@@ -1,8 +1,8 @@
 import '@components/RecipeForm.css';
-import { RadioButtonWithCaption } from './RadioButtonWithCaption';
 import { Dlc, DlcChoice, SelectMode } from '@/App'; // types
 import { DlcFormSection } from '@components/DlcFormSection';
-import { TagText } from '@components/Tag'; // types
+import { RadioButtonWithCaption } from '@components/RadioButtonWithCaption';
+import { TagText, TagType } from '@components/Tag'; // types
 import { TagPicker } from '@components/TagPicker';
 
 interface MatchModeSelectorProps {
@@ -57,7 +57,7 @@ export const RecipeForm = ({
   selectMode,
   setSelectMode,
   selectedIncompatibleTags,
-  setSelectedIncompatibleTags
+  setSelectedIncompatibleTags,
 }: RecipeFormProps) => {
   return (
     <div className="recipeForm">
@@ -72,6 +72,7 @@ export const RecipeForm = ({
           tags={tags}
           selectedTags={selectedTags}
           setSelectedTags={setSelectedTags}
+          tagType={TagType.FOOD}
         />
         <MatchModeSelector
           selectMode={selectMode}
@@ -84,6 +85,7 @@ export const RecipeForm = ({
           tags={tags}
           selectedTags={selectedIncompatibleTags}
           setSelectedTags={setSelectedIncompatibleTags}
+          tagType={TagType.BAD}
         />
       </div>
     </div>

@@ -5,12 +5,14 @@ interface TagPaletteProps {
   tags: TagText[];
   selectedTags: TagText[];
   setSelectedTags: React.Dispatch<React.SetStateAction<TagText[]>>;
+  tagType: TagType;
 }
 
 export const TagPalette = ({
   tags,
   selectedTags,
   setSelectedTags,
+  tagType,
 }: TagPaletteProps) => {
   const toggleSelection = (tag: TagText) => () => {
     setSelectedTags((prevState) => {
@@ -25,7 +27,7 @@ export const TagPalette = ({
       {tags.map((tag) => {
         return selectedTags.includes(tag) ? (
           <ClickableTag
-            type={TagType.FOOD}
+            type={tagType}
             text={tag}
             key={tag}
             onClick={toggleSelection(tag)}
