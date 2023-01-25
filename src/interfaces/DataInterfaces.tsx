@@ -1,16 +1,46 @@
+enum UnlockTypes {
+  DEFAULT = 'default',
+  LEVEL = 'level',
+  BOND = 'bond',
+  SHOP = 'shop',
+  SIDEQUEST = 'sidequest',
+  MAINQUEST = 'mainquest',
+  OTHER = 'other',
+}
+
 interface DefaultUnlock {
-  type: string;
+  type: UnlockTypes.DEFAULT;
 }
 
 interface LevelUnlock {
-  type: string;
+  type: UnlockTypes.LEVEL;
   level: string;
 }
 
 interface BondUnlock {
-  type: string;
+  type: UnlockTypes.BOND;
   character: string;
   bondLevel: string;
+}
+
+interface ShopUnlock {
+  type: UnlockTypes.SHOP;
+  shop: string;
+}
+
+interface SidequestUnlock {
+  type: UnlockTypes.SIDEQUEST;
+  quest: string;
+}
+
+interface MainquestUnlock {
+  type: UnlockTypes.MAINQUEST;
+  quest: string;
+}
+
+interface OtherUnlock {
+  type: UnlockTypes.OTHER;
+  source: string;
 }
 
 export interface Recipe {
@@ -22,7 +52,14 @@ export interface Recipe {
   tags: string[];
   incompatibleTags: string[];
   cookingTime: string;
-  source: DefaultUnlock | LevelUnlock | BondUnlock;
+  source:
+    | DefaultUnlock
+    | LevelUnlock
+    | BondUnlock
+    | ShopUnlock
+    | SidequestUnlock
+    | MainquestUnlock
+    | OtherUnlock;
   description: string;
   dlc: string;
 }
