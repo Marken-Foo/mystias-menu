@@ -1,18 +1,21 @@
-.recipeForm {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1em;
-}
-
-.tagsLabel {
-  align-self: flex-start;
-  line-height: 200%;
+.formInput {
   border: 2px solid transparent;
+  column-gap: 1em;
+  display: flex;
+  line-height: 200%;
 }
 
-.tagSection {
-  column-gap: 0.5em;
-  display: flex;
+.formLabel {
+  border: 2px solid transparent;
+  grid-column: 1;
+  line-height: 200%;
+  white-space: nowrap;
+}
+
+.recipeForm {
+  display: grid;
+  grid-template-columns: min-content min-content auto;
+  grid-template-rows: repeat(4, minmax(3em, auto));
 }
 
 .verticalRadioButtons {
@@ -20,5 +23,6 @@
   display: inline-flex;
   flex-direction: column;
   flex-shrink: 0;
+  padding: 0 1em;
   row-gap: 0.5em;
 }
