@@ -25,4 +25,5 @@
   flex-shrink: 0;
   padding: 0 1em;
   row-gap: 0.5em;
+  white-space: nowrap;
 }
