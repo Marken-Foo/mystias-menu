@@ -1,9 +1,6 @@
 import { Tag, TagType } from '@/components/Tag';
-import {
-  Recipe,
-  ShortIngredient,
-  UnlockTypes,
-} from '@/interfaces/DataInterfaces'; // types
+import { Recipe, ShortIngredient } from '@/interfaces/DataInterfaces'; // types
+import { UnlockTypes } from '@/interfaces/DataInterfaces';
 import { sortFunctionOnField } from '@/utils';
 import { GameAssetIcon } from '@components/GameAssetIcon';
 import { Ingredient } from '@components/Ingredient';
