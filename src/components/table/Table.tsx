@@ -15,7 +15,7 @@ interface RowFilter<T> {
   (item: T): boolean;
 }
 
-enum SortOrder {
+export enum SortOrder {
   ASCENDING = 'asc',
   DESCENDING = 'desc',
 }
@@ -111,7 +111,12 @@ export const Table = <T extends Data>({
 
   return (
     <table>
-      <TableHeader headerData={headerData} sortByField={sortByField} />
+      <TableHeader
+        headerData={headerData}
+        sortByField={sortByField}
+        sortField={sortField}
+        sortOrder={sortOrder}
+      />
       <tbody>
         {displayData.length === 0 ? (
           <EmptyRow accessors={accessors} />

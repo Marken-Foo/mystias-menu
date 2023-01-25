@@ -1,14 +1,26 @@
+import { SortOrder } from './Table';
 import { Column, Data } from './TableInterfaces';
 
 interface HeaderProps<T> {
   headerData: Column<T>[];
   sortByField: (accessor: string) => void;
+  sortField: string;
+  sortOrder: SortOrder;
 }
 
 export const TableHeader = <T extends Data>({
   headerData,
   sortByField,
+  sortField,
+  sortOrder,
 }: HeaderProps<T>) => {
+  const getSortIcon = (header: Column<T>) => {
+    if (!header.isSortable) return '';
+    else if (header.accessor !== sortField) return '⬘';
+    else if (sortOrder === SortOrder.ASCENDING) return '⏷';
+    else if (sortOrder === SortOrder.DESCENDING) return '⏶';
+    else return '';
+  };
   return (
     <thead>
       <tr>
@@ -22,7 +34,7 @@ export const TableHeader = <T extends Data>({
               header.isSortable ? 'clickable tableHeader' : 'tableHeader'
             }
           >
-            {header.label}
+            {header.label} {getSortIcon(header)}
           </th>
         ))}
       </tr>
