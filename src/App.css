@@ -21,4 +21,5 @@
 .tableCell {
   max-width: 300px;
   text-align: center;
+  white-space: pre-line;
 }

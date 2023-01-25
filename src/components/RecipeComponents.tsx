@@ -1,5 +1,9 @@
 import { Tag, TagType } from '@/components/Tag';
-import { Recipe } from '@/interfaces/DataInterfaces';
+import {
+  Recipe,
+  ShortIngredient,
+  UnlockTypes,
+} from '@/interfaces/DataInterfaces'; // types
 import { sortFunctionOnField } from '@/utils';
 import { GameAssetIcon } from '@components/GameAssetIcon';
 import { Ingredient } from '@components/Ingredient';
@@ -19,7 +23,11 @@ const ToolDisplay = ({ name }: { name: string }) => {
   );
 };
 
-const IngredientDisplay = ({ ingredients }: { ingredients: any[] }) => {
+const IngredientDisplay = ({
+  ingredients,
+}: {
+  ingredients: ShortIngredient[];
+}) => {
   return (
     <>
       {ingredients.map((ingredient) => (
@@ -31,6 +39,26 @@ const IngredientDisplay = ({ ingredients }: { ingredients: any[] }) => {
       ))}
     </>
   );
+};
+
+const recipeSourceDisplay = (recipe: Recipe) => {
+  switch (recipe.source.type) {
+    case UnlockTypes.BOND:
+      return `【羁绊】\n${recipe.source.character} ${recipe.source.bondLevel} 级`;
+    case UnlockTypes.DEFAULT:
+      return '初始';
+    case UnlockTypes.LEVEL:
+      return `主等级 ${recipe.source.level}`;
+    case UnlockTypes.MAINQUEST:
+    case UnlockTypes.SIDEQUEST:
+      return `【探索】\n${recipe.source.quest}`;
+    case UnlockTypes.SHOP:
+      return `【商店】\n${recipe.source.shop}`;
+    case UnlockTypes.OTHER:
+      return recipe.source.source;
+    default:
+      return '';
+  }
 };
 
 export const RECIPE_COLUMNS: Column<Recipe>[] = [
@@ -95,5 +123,10 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
     displayFunction: (recipe) => recipe.price,
     isSortable: true,
     sortFunction: sortFunctionOnField((recipe) => recipe.price),
+  },
+  {
+    accessor: 'source',
+    label: '解锁方式',
+    displayFunction: recipeSourceDisplay,
   },
 ];

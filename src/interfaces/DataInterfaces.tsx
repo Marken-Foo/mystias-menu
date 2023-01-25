@@ -1,4 +1,4 @@
-enum UnlockTypes {
+export enum UnlockTypes {
   DEFAULT = 'default',
   LEVEL = 'level',
   BOND = 'bond',
@@ -43,12 +43,17 @@ interface OtherUnlock {
   source: string;
 }
 
+export interface ShortIngredient {
+  name: string;
+  thwikiImage: string;
+}
+
 export interface Recipe {
   name: string;
   thwikiImage: string;
   tool: string;
   price: number;
-  ingredients: { name: string; thwikiImage: string }[];
+  ingredients: ShortIngredient[];
   tags: string[];
   incompatibleTags: string[];
   cookingTime: string;
