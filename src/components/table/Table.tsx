@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { TableHeader } from './TableHeader';
+import { SortOrder, TableHeader } from './TableHeader';
 import {
   Column,
   Data,
@@ -13,11 +13,6 @@ export type { Column };
 
 interface RowFilter<T> {
   (item: T): boolean;
-}
-
-export enum SortOrder {
-  ASCENDING = 'asc',
-  DESCENDING = 'desc',
 }
 
 interface SortTableFunction<T> {

@@ -1,5 +1,9 @@
-import { SortOrder } from './Table';
 import { Column, Data } from './TableInterfaces';
+
+export enum SortOrder {
+  ASCENDING = 'asc',
+  DESCENDING = 'desc',
+}
 
 interface HeaderProps<T> {
   headerData: Column<T>[];
