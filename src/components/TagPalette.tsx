@@ -26,19 +26,19 @@ export const TagPalette = ({
     <div className="tagPalette">
       {tags.map((tag) => {
         return selectedTags.includes(tag) ? (
-          <ClickableTag
+          <><ClickableTag
             type={tagType}
             text={tag}
             key={tag}
             onClick={toggleSelection(tag)}
-          />
+          />{' '}</>
         ) : (
-          <ClickableTag
+          <><ClickableTag
             type={TagType.INACTIVE}
             text={tag}
             key={tag}
             onClick={toggleSelection(tag)}
-          />
+          />{' '}</>
         );
       })}
     </div>

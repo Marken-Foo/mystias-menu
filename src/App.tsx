@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Recipe } from '@/interfaces/DataInterfaces';
+import { Recipe, TagData } from '@/interfaces/DataInterfaces'; // types
 import { RECIPE_COLUMNS } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
 import { TagText } from '@components/Tag'; // types
@@ -66,8 +66,9 @@ const App = () => {
   useEffect(() => {
     const loadFoodTags = async () => {
       const res = await fetch(FOOD_TAGS_URI);
-      const data: TagText[] = await res.json();
-      setFoodTags(data);
+      const data = await res.json();
+      const tags: TagText[] = await data.map((tag: TagData) => tag.name.zh);
+      setFoodTags(tags);
     };
     loadFoodTags();
   }, []);

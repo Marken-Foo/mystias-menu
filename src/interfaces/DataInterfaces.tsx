@@ -68,3 +68,10 @@ export interface Recipe {
   description: string;
   dlc: string;
 }
+
+export interface TagData {
+  name: {
+    en: string;
+    zh: string;
+  };
+}
