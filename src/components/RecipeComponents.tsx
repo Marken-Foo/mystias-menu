@@ -96,7 +96,7 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
       />
     ),
     isSortable: true,
-    sortFunction: sortFunctionOnField((recipe) => recipe.tool),
+    sortFunction: sortFunctionOnField((recipe) => recipe.tool.name),
   },
   {
     accessor: 'ingredients',

@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 import { ClickableTag, TagType } from '@/components/Tag';
 import { TagText } from '@/components/Tag'; // types
 
@@ -25,20 +27,17 @@ export const TagPalette = ({
   return (
     <div className="tagPalette">
       {tags.map((tag) => {
-        return selectedTags.includes(tag) ? (
-          <><ClickableTag
-            type={tagType}
-            text={tag}
-            key={tag}
-            onClick={toggleSelection(tag)}
-          />{' '}</>
-        ) : (
-          <><ClickableTag
-            type={TagType.INACTIVE}
-            text={tag}
-            key={tag}
-            onClick={toggleSelection(tag)}
-          />{' '}</>
+        const passedType = selectedTags.includes(tag)
+          ? tagType
+          : TagType.INACTIVE;
+        return (
+          <Fragment key={tag}>
+            <ClickableTag
+              type={passedType}
+              text={tag}
+              onClick={toggleSelection(tag)}
+            />{' '}
+          </Fragment>
         );
       })}
     </div>
