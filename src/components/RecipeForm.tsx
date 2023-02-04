@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import '@components/RecipeForm.css';
 import { Dlc, DlcChoice, SelectMode } from '@/App'; // types
 import { CheckboxWithCaption } from '@components/CheckboxWithCaption';
@@ -14,9 +16,10 @@ const MatchModeSelector = ({
   selectMode,
   setSelectMode,
 }: MatchModeSelectorProps) => {
+  const { t } = useTranslation('translation');
   const input = [
-    { value: SelectMode.ALL, caption: '符合所有标签' },
-    { value: SelectMode.AT_LEAST_ONE, caption: '符合至少一个标签' },
+    { value: SelectMode.ALL, caption: t('matchall') }, // '符合所有标签' },
+    { value: SelectMode.AT_LEAST_ONE, caption: t('matchany') }, // '符合至少一个标签' },
   ];
   return (
     <div className="verticalRadioButtons">

@@ -8,8 +8,8 @@ import { Title } from '@components/Title';
 import * as tb from '@components/table/Table';
 import '@/App.css';
 
-const RECIPES_URI = '/recipes.json';
-const FOOD_TAGS_URI = '/foodTags.json';
+const RECIPES_URI = 'http://localhost:8080/recipes?lang=en';
+const FOOD_TAGS_URI = 'http://localhost:8080/tags/food?lang=en';
 
 export interface DlcChoice {
   base: boolean;
