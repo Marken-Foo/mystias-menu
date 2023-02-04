@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { Recipe } from '@/interfaces/DataInterfaces'; // types
 import { RECIPE_COLUMNS } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
@@ -8,8 +10,37 @@ import { Title } from '@components/Title';
 import * as tb from '@components/table/Table';
 import '@/App.css';
 
-const RECIPES_URI = 'http://localhost:8080/recipes?lang=en';
-const FOOD_TAGS_URI = 'http://localhost:8080/tags/food?lang=en';
+const getRecipesUri = (lng: string) =>
+  `http://localhost:8080/recipes?lang=${lng}`;
+const getFoodTagsUri = (lng: string) =>
+  `http://localhost:8080/tags/food?lang=${lng}`;
+
+const LANGUAGES: { [index: string]: string } = {
+  zh: '🇨🇳 中文',
+  en: '🇬🇧 English',
+};
+
+const LanguageDropdown = ({ language, changeLanguage }) => {
+  const { t } = useTranslation();
+  return (
+    <>
+      <label htmlFor="language-select">{t('language')}</label>{' '}
+      <select
+        id="language-select"
+        value={language}
+        onChange={(event) => changeLanguage(event.target.value)}
+      >
+        {Object.entries(LANGUAGES).map(([value, label]) => {
+          return (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          );
+        })}
+      </select>
+    </>
+  );
+};
 
 export interface DlcChoice {
   base: boolean;
@@ -29,6 +60,13 @@ export enum SelectMode {
 }
 
 const App = () => {
+  const [language, setLanguage] = useState('zh');
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    setLanguage(lng);
+    i18n.changeLanguage(lng);
+  };
+
   const DLCS: Dlc[] = [
     { name: 'base', label: '基础游戏' },
     { name: 'DLC1', label: 'DLC1' },
@@ -55,22 +93,22 @@ const App = () => {
   // Load recipes
   useEffect(() => {
     const loadData = async () => {
-      const res = await fetch(RECIPES_URI);
+      const res = await fetch(getRecipesUri(language));
       const data: Recipe[] = await res.json();
       setRecipes(data);
     };
     loadData();
-  }, []);
+  }, [language]);
 
   // Load tags
   useEffect(() => {
     const loadFoodTags = async () => {
-      const res = await fetch(FOOD_TAGS_URI);
+      const res = await fetch(getFoodTagsUri(language));
       const data = (await res.json()) as TagText[];
       setFoodTags(data);
     };
     loadFoodTags();
-  }, []);
+  }, [language]);
 
   const filterRecipeByDlc = (recipe: Recipe) => {
     return Object.entries(dlcVersions)
@@ -115,6 +153,7 @@ const App = () => {
     <div className="App">
       <Title text={'夜雀料理'} />
       <p>Welcome to Mystia&apos;s Izakaya</p>
+      <LanguageDropdown language={language} changeLanguage={changeLanguage} />
       <RecipeForm
         dlcs={DLCS}
         dlcVersions={dlcVersions}

@@ -1,4 +1,5 @@
 {
+  "language": "Language",
   "matchall": "符合所有标签",
   "matchany": "符合至少一个标签"
 }
