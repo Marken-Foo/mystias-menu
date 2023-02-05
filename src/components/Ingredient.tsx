@@ -9,8 +9,6 @@ export const Ingredient = ({ name, imageSource }: IngredientProps) => {
   return (
     <div style={{ display: 'inline-block' }}>
       <GameAssetIcon src={imageSource} name={name} />
-      {/* <br /> */}
-      {/* {name} */}
     </div>
   );
 };

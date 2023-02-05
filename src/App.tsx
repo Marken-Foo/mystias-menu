@@ -41,14 +41,17 @@ export enum SelectMode {
 
 const App = () => {
   const [language, setLanguage] = useState('zh');
-  const { i18n } = useTranslation();
-  const changeLanguage = (lng: string): void => {
+  const { t, i18n } = useTranslation();
+  const changeLanguage = async (lng: string): Promise<void> => {
     setLanguage(lng);
-    i18n.changeLanguage(lng);
+    await i18n.changeLanguage(lng);
+    setRecipeColumns(() =>
+      RECIPE_COLUMNS.map((col) => ({ ...col, label: t(col.label) }))
+    );
   };
 
   const DLCS: Dlc[] = [
-    { name: 'base', label: '基础游戏' },
+    { name: 'base', label: t('baseGame') },
     { name: 'DLC1', label: 'DLC1' },
     { name: 'DLC2', label: 'DLC2' },
     { name: 'DLC3', label: 'DLC3' },
@@ -60,7 +63,11 @@ const App = () => {
     ) as unknown as DlcChoice // Need to ensure DLCS and DlcChoice in sync
   );
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [recipeColumns] = useState<tb.Column<Recipe>[]>(RECIPE_COLUMNS);
+  const [recipeColumns, setRecipeColumns] = useState<tb.Column<Recipe>[]>(
+    RECIPE_COLUMNS.map((col) => {
+      return { ...col, label: t(col.label) };
+    })
+  );
   const [foodTags, setFoodTags] = useState<TagText[]>([]);
   const [selectedFoodTags, setSelectedFoodTags] = useState<TagText[]>([]);
   const [selectFoodTagsMode, setSelectFoodTagsMode] = useState<SelectMode>(

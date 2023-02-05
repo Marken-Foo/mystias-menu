@@ -24,13 +24,7 @@ interface ToolDisplayProps {
 }
 
 const ToolDisplay = ({ name, imageName }: ToolDisplayProps) => {
-  return (
-    <>
-      <GameAssetIcon src={`/images/tools/${imageName}.png`} name={name} />
-      {/* <br />
-      <div>{name}</div> */}
-    </>
-  );
+  return <GameAssetIcon src={`/images/tools/${imageName}.png`} name={name} />;
 };
 
 interface IngredientsDisplayProps {
@@ -74,21 +68,21 @@ const recipeSourceDisplay = (recipe: Recipe) => {
 export const RECIPE_COLUMNS: Column<Recipe>[] = [
   {
     accessor: 'icon',
-    label: '料理',
+    label: 'recipeHeader',
     displayFunction: (recipe) => (
       <RecipeIconDisplay name={recipe.name} imageName={recipe.defaultName} />
     ),
   },
   {
     accessor: 'name',
-    label: '名称',
+    label: 'recipeNameHeader',
     displayFunction: (recipe) => recipe.name,
     isSortable: true,
     sortFunction: sortFunctionOnField((recipe) => recipe.name),
   },
   {
     accessor: 'tool',
-    label: '道具',
+    label: 'recipeToolHeader',
     displayFunction: (recipe) => (
       <ToolDisplay
         name={recipe.tool.name}
@@ -100,14 +94,14 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
   },
   {
     accessor: 'ingredients',
-    label: '食材',
+    label: 'recipeIngredientsHeader',
     displayFunction: (recipe) => (
       <IngredientsDisplay ingredients={recipe.ingredients} />
     ),
   },
   {
     accessor: 'tags',
-    label: '正特性',
+    label: 'recipeTagsHeader',
     displayFunction: (recipe) => (
       <>
         {recipe.tags.map((tag: string) => (
@@ -120,7 +114,7 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
   },
   {
     accessor: 'incompatibleTags',
-    label: '负特性',
+    label: 'recipeIncompatibleTagsHeader',
     displayFunction: (recipe) => (
       <>
         {recipe.incompatibleTags.map((tag: string) => (
@@ -131,21 +125,21 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
   },
   {
     accessor: 'cookingTime',
-    label: '烹饪时间',
+    label: 'recipeCookingTimeHeader',
     displayFunction: (recipe) => recipe.cookingTime,
     isSortable: true,
     sortFunction: sortFunctionOnField((recipe) => recipe.cookingTime),
   },
   {
     accessor: 'price',
-    label: '售价（円）',
+    label: 'recipePriceHeader',
     displayFunction: (recipe) => recipe.price,
     isSortable: true,
     sortFunction: sortFunctionOnField((recipe) => recipe.price),
   },
   {
     accessor: 'source',
-    label: '解锁方式',
+    label: 'recipeSourceHeader',
     displayFunction: recipeSourceDisplay,
   },
 ];

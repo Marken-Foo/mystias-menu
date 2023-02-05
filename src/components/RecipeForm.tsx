@@ -18,8 +18,8 @@ const MatchModeSelector = ({
 }: MatchModeSelectorProps) => {
   const { t } = useTranslation('translation');
   const input = [
-    { value: SelectMode.ALL, caption: t('matchall') }, // '符合所有标签' },
-    { value: SelectMode.AT_LEAST_ONE, caption: t('matchany') }, // '符合至少一个标签' },
+    { value: SelectMode.ALL, caption: t('matchall') },
+    { value: SelectMode.AT_LEAST_ONE, caption: t('matchany') },
   ];
   return (
     <div className="verticalRadioButtons">
@@ -66,9 +66,10 @@ export const RecipeForm = ({
   unwantedTags,
   setUnwantedTags,
 }: RecipeFormProps) => {
+  const { t } = useTranslation();
   return (
     <div className="recipeForm">
-      <span className="formLabel">持有游戏内容：</span>
+      <span className="formLabel">{t('ownedContent')}</span>
       <span className="formInput">
         {dlcs.map((dlc) => (
           <CheckboxWithCaption
@@ -84,7 +85,7 @@ export const RecipeForm = ({
           />
         ))}
       </span>
-      <span className="formLabel">正特性筛选：</span>
+      <span className="formLabel">{t('positiveTags')}</span>
       <TagPicker
         tags={tags}
         selectedTags={selectedTags}
@@ -95,14 +96,14 @@ export const RecipeForm = ({
         selectMode={selectMode}
         setSelectMode={setSelectMode}
       />
-      <span className="formLabel">负特性筛选：</span>
+      <span className="formLabel">{t('incompatibleTags')}</span>
       <TagPicker
         tags={tags}
         selectedTags={selectedIncompatibleTags}
         setSelectedTags={setSelectedIncompatibleTags}
         tagType={TagType.BAD}
       />
-      <span className="formLabel">排除正特性：</span>
+      <span className="formLabel">{t('unwantedTags')}</span>
       <TagPicker
         tags={tags}
         selectedTags={unwantedTags}

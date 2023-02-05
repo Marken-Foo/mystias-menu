@@ -1,5 +1,20 @@
 {
   "language": "语言",
+  "ownedContent": "Owned content",
+  "baseGame": "Base game",
+  "positiveTags": "Include tags",
+  "incompatibleTags": "Incompatible tags",
+  "unwantedTags": "Exclude tags",
   "matchall": "Match all tags",
-  "matchany": "Match at least one tag"
+  "matchany": "Match at least one tag",
+  "recipeHeader": "Dish",
+  "recipeNameHeader": "Name",
+  "recipeToolHeader": "Tool",
+  "recipeIngredientsHeader": "Ingredients",
+  "recipeTagsHeader": "Tags",
+  "recipeIncompatibleTagsHeader": "Incompatible tags",
+  "recipeCookingTimeHeader": "Cooking time",
+  "recipePriceHeader": "Price",
+  "recipeSourceHeader": "Unlock",
+  "noTagsSelected": "Choose tags..."
 }

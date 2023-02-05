@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import '@components/TagPicker.css';
 import { ClickableTag, TagType } from '@/components/Tag';
 import { TagText } from '@/components/Tag'; // types
@@ -22,6 +24,7 @@ const SelectedTagDisplay = ({
   toggleTagPalette,
   isTagPaletteShown,
 }: SelectedTagDisplayProps) => {
+  const { t } = useTranslation();
   const removeTag = (tag: TagText) => () => {
     setTags((prevState) => [...prevState].filter((t) => t !== tag));
   };
@@ -29,7 +32,7 @@ const SelectedTagDisplay = ({
     <span className="tagDisplayField">
       <span className="tagDisplay">
         {tags.length === 0
-          ? '<请选标签>'
+          ? t('noTagsSelected')
           : tags.map((tag) => (
               <ClickableTag
                 type={tagType}
