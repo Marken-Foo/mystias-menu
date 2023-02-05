@@ -17,9 +17,9 @@ import * as tb from '@components/table/Table';
 import '@/App.css';
 
 const getRecipesUri = (lng: string) =>
-  `http://localhost:8080/recipes?lang=${lng}`;
+  `${import.meta.env.VITE_GET_RECIPES_URI}?lang=${lng}`;
 const getFoodTagsUri = (lng: string) =>
-  `http://localhost:8080/tags/food?lang=${lng}`;
+  `${import.meta.env.VITE_GET_FOOD_TAGS_URI}?lang=${lng}`;
 
 export interface DlcChoice {
   base: boolean;
