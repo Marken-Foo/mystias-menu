@@ -13,6 +13,7 @@
 }
 
 .tableHeader {
+  background-color: #fbeebb;
   font-size: 120%;
   font-weight: bold;
   max-width: 300px;
@@ -22,4 +23,19 @@
   max-width: 300px;
   text-align: center;
   white-space: pre-line;
+}
+
+table {
+  border: 1px solid #444444;
+  border-collapse: collapse;
+  color: #000000;
+  table-layout: fixed;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #fcfcdd;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #ffffee;
 }
