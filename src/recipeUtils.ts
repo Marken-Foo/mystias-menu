@@ -1,27 +1,26 @@
-import { Recipe } from '@/interfaces/DataInterfaces'; // types
-import { TagText } from '@components/Tag'; // types
+import { Recipe, TranslatedName } from '@/interfaces/DataInterfaces'; // types
 
 export const filterRecipeByAllTags =
-  (tagList: TagText[]) =>
+  (tagList: TranslatedName[]) =>
   (recipe: Recipe): boolean => {
-    return tagList.every((tag) => recipe.tags.includes(tag));
+    return tagList.every((tag) => recipe.tags.includes(tag.name));
   };
 
 export const filterRecipeBySomeTags =
-  (tagList: TagText[]) =>
+  (tagList: TranslatedName[]) =>
   (recipe: Recipe): boolean => {
     if (tagList.length === 0) return true;
-    return tagList.some((tag) => recipe.tags.includes(tag));
+    return tagList.some((tag) => recipe.tags.includes(tag.name));
   };
 
 export const filterRecipeByIncompatibleTags =
-  (tagList: TagText[]) =>
+  (tagList: TranslatedName[]) =>
   (recipe: Recipe): boolean => {
-    return tagList.every((tag) => recipe.incompatibleTags.includes(tag));
+    return tagList.every((tag) => recipe.incompatibleTags.includes(tag.name));
   };
 
 export const filterRecipeByUnwantedTags =
-  (tagList: TagText[]) =>
+  (tagList: TranslatedName[]) =>
   (recipe: Recipe): boolean => {
-    return tagList.every((tag) => !recipe.tags.includes(tag));
+    return tagList.every((tag) => !recipe.tags.includes(tag.name));
   };

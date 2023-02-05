@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { Recipe } from '@/interfaces/DataInterfaces'; // types
+import { Recipe, FullTag } from '@/interfaces/DataInterfaces'; // types
 import {
   filterRecipeByAllTags,
   filterRecipeByIncompatibleTags,
@@ -12,7 +12,6 @@ import {
 import { LanguageDropdown } from '@components/LanguageDropdown';
 import { RECIPE_COLUMNS } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
-import { TagText } from '@components/Tag'; // types
 import { Title } from '@components/Title';
 import * as tb from '@components/table/Table';
 import '@/App.css';
@@ -38,6 +37,21 @@ export enum SelectMode {
   ALL = 'all',
   AT_LEAST_ONE = 'some',
 }
+
+const translateTagList =
+  (allTags: FullTag[]) =>
+  (selectedTags: FullTag[]): FullTag[] => {
+    const translationMap: Map<string, string> = new Map();
+    allTags.forEach((tag: FullTag): void => {
+      translationMap.set(tag.defaultName, tag.name);
+    });
+    return selectedTags.map(
+      (tag: FullTag): FullTag => ({
+        ...tag,
+        name: translationMap.get(tag.defaultName) || 'notFound',
+      })
+    );
+  };
 
 const App = () => {
   const [language, setLanguage] = useState('zh');
@@ -68,14 +82,14 @@ const App = () => {
       return { ...col, label: t(col.label) };
     })
   );
-  const [foodTags, setFoodTags] = useState<TagText[]>([]);
-  const [selectedFoodTags, setSelectedFoodTags] = useState<TagText[]>([]);
+  const [foodTags, setFoodTags] = useState<FullTag[]>([]);
+  const [selectedFoodTags, setSelectedFoodTags] = useState<FullTag[]>([]);
   const [selectFoodTagsMode, setSelectFoodTagsMode] = useState<SelectMode>(
     SelectMode.ALL
   );
   const [selectedIncompatibleFoodTags, setSelectedIncompatibleFoodTags] =
-    useState<TagText[]>([]);
-  const [unwantedFoodTags, setUnwantedFoodTags] = useState<TagText[]>([]);
+    useState<FullTag[]>([]);
+  const [unwantedFoodTags, setUnwantedFoodTags] = useState<FullTag[]>([]);
 
   // Load recipes
   useEffect(() => {
@@ -91,10 +105,18 @@ const App = () => {
   useEffect(() => {
     const loadFoodTags = async () => {
       const res = await fetch(getFoodTagsUri(language));
-      const data = (await res.json()) as TagText[];
+      const data = (await res.json()) as FullTag[];
       setFoodTags(data);
+      return data;
     };
-    loadFoodTags();
+    const updateTags = async () => {
+      const foodTags = await loadFoodTags();
+      const foodTagsTranslator = translateTagList(foodTags);
+      setSelectedFoodTags(foodTagsTranslator);
+      setSelectedIncompatibleFoodTags(foodTagsTranslator);
+      setUnwantedFoodTags(foodTagsTranslator);
+    };
+    updateTags();
   }, [language]);
 
   const filterRecipeByDlc = (recipe: Recipe) => {

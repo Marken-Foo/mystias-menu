@@ -2,9 +2,10 @@ import { useTranslation } from 'react-i18next';
 
 import '@components/RecipeForm.css';
 import { Dlc, DlcChoice, SelectMode } from '@/App'; // types
+import { FullTag } from '@/interfaces/DataInterfaces'; // types
 import { CheckboxWithCaption } from '@components/CheckboxWithCaption';
 import { RadioButtonWithCaption } from '@components/RadioButtonWithCaption';
-import { TagText, TagType } from '@components/Tag'; // types
+import { TagType } from '@components/Tag'; // types
 import { TagPicker } from '@components/TagPicker';
 
 interface MatchModeSelectorProps {
@@ -41,15 +42,15 @@ interface RecipeFormProps {
   dlcs: Dlc[];
   dlcVersions: DlcChoice;
   setDlcVersions: React.Dispatch<React.SetStateAction<DlcChoice>>;
-  tags: TagText[];
-  selectedTags: TagText[];
-  setSelectedTags: React.Dispatch<React.SetStateAction<TagText[]>>;
+  tags: FullTag[];
+  selectedTags: FullTag[];
+  setSelectedTags: React.Dispatch<React.SetStateAction<FullTag[]>>;
   selectMode: SelectMode;
   setSelectMode: React.Dispatch<React.SetStateAction<SelectMode>>;
-  selectedIncompatibleTags: TagText[];
-  setSelectedIncompatibleTags: React.Dispatch<React.SetStateAction<TagText[]>>;
-  unwantedTags: TagText[];
-  setUnwantedTags: React.Dispatch<React.SetStateAction<TagText[]>>;
+  selectedIncompatibleTags: FullTag[];
+  setSelectedIncompatibleTags: React.Dispatch<React.SetStateAction<FullTag[]>>;
+  unwantedTags: FullTag[];
+  setUnwantedTags: React.Dispatch<React.SetStateAction<FullTag[]>>;
 }
 
 export const RecipeForm = ({

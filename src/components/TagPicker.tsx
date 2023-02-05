@@ -3,15 +3,15 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import '@components/TagPicker.css';
-import { ClickableTag, TagType } from '@/components/Tag';
-import { TagText } from '@/components/Tag'; // types
+import { FullTag } from '@/interfaces/DataInterfaces'; // types
+import { ClickableTag, TagType } from '@components/Tag';
 import { TagPalette } from '@components/TagPalette';
 
 type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 
 interface SelectedTagDisplayProps {
-  tags: TagText[];
-  setTags: StateSetter<TagText[]>;
+  tags: FullTag[];
+  setTags: StateSetter<FullTag[]>;
   tagType: TagType;
   toggleTagPalette: () => void;
   isTagPaletteShown: boolean;
@@ -25,8 +25,10 @@ const SelectedTagDisplay = ({
   isTagPaletteShown,
 }: SelectedTagDisplayProps) => {
   const { t } = useTranslation();
-  const removeTag = (tag: TagText) => () => {
-    setTags((prevState) => [...prevState].filter((t) => t !== tag));
+  const removeTag = (tag: FullTag) => () => {
+    setTags((prevState) =>
+      [...prevState].filter((t) => t.defaultName !== tag.defaultName)
+    );
   };
   return (
     <span className="tagDisplayField">
@@ -36,8 +38,8 @@ const SelectedTagDisplay = ({
           : tags.map((tag) => (
               <ClickableTag
                 type={tagType}
-                text={`${tag}⨯`}
-                key={tag}
+                text={`${tag.name}⨯`}
+                key={tag.defaultName}
                 onClick={removeTag(tag)}
               />
             ))}
@@ -50,9 +52,9 @@ const SelectedTagDisplay = ({
 };
 
 interface TagPickerProps {
-  tags: TagText[];
-  selectedTags: TagText[];
-  setSelectedTags: StateSetter<TagText[]>;
+  tags: FullTag[];
+  selectedTags: FullTag[];
+  setSelectedTags: StateSetter<FullTag[]>;
   tagType: TagType;
 }
 

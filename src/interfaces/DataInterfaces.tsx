@@ -66,3 +66,5 @@ export interface Recipe extends TranslatedName {
   description: string;
   dlc: string;
 }
+
+export type FullTag = TranslatedName;
