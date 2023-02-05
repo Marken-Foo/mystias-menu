@@ -3,6 +3,13 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Recipe } from '@/interfaces/DataInterfaces'; // types
+import {
+  filterRecipeByAllTags,
+  filterRecipeByIncompatibleTags,
+  filterRecipeBySomeTags,
+  filterRecipeByUnwantedTags,
+} from '@/recipeUtils';
+import { LanguageDropdown } from '@components/LanguageDropdown';
 import { RECIPE_COLUMNS } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
 import { TagText } from '@components/Tag'; // types
@@ -14,33 +21,6 @@ const getRecipesUri = (lng: string) =>
   `http://localhost:8080/recipes?lang=${lng}`;
 const getFoodTagsUri = (lng: string) =>
   `http://localhost:8080/tags/food?lang=${lng}`;
-
-const LANGUAGES: { [index: string]: string } = {
-  zh: '🇨🇳 中文',
-  en: '🇬🇧 English',
-};
-
-const LanguageDropdown = ({ language, changeLanguage }) => {
-  const { t } = useTranslation();
-  return (
-    <>
-      <label htmlFor="language-select">{t('language')}</label>{' '}
-      <select
-        id="language-select"
-        value={language}
-        onChange={(event) => changeLanguage(event.target.value)}
-      >
-        {Object.entries(LANGUAGES).map(([value, label]) => {
-          return (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          );
-        })}
-      </select>
-    </>
-  );
-};
 
 export interface DlcChoice {
   base: boolean;
@@ -61,8 +41,8 @@ export enum SelectMode {
 
 const App = () => {
   const [language, setLanguage] = useState('zh');
-  const { t, i18n } = useTranslation();
-  const changeLanguage = (lng) => {
+  const { i18n } = useTranslation();
+  const changeLanguage = (lng: string): void => {
     setLanguage(lng);
     i18n.changeLanguage(lng);
   };
@@ -117,35 +97,16 @@ const App = () => {
       .includes(recipe.dlc);
   };
 
-  const filterRecipeByAllTags = (recipe: Recipe) => {
-    return selectedFoodTags.every((tag) => recipe.tags.includes(tag));
-  };
-
-  const filterRecipeBySomeTag = (recipe: Recipe) => {
-    if (selectedFoodTags.length === 0) return true;
-    return selectedFoodTags.some((tag) => recipe.tags.includes(tag));
-  };
-
-  const filterRecipeByIncompatibleTags = (recipe: Recipe) => {
-    return selectedIncompatibleFoodTags.every((tag) =>
-      recipe.incompatibleTags.includes(tag)
-    );
-  };
-
-  const filterRecipeByUnwantedTags = (recipe: Recipe) => {
-    return unwantedFoodTags.every((tag) => !recipe.tags.includes(tag));
-  };
-
   const filterByTagFunctions = {
-    [SelectMode.ALL]: filterRecipeByAllTags,
-    [SelectMode.AT_LEAST_ONE]: filterRecipeBySomeTag,
+    [SelectMode.ALL]: filterRecipeByAllTags(selectedFoodTags),
+    [SelectMode.AT_LEAST_ONE]: filterRecipeBySomeTags(selectedFoodTags),
   };
 
   const filterFunctions = [
     filterRecipeByDlc,
     filterByTagFunctions[selectFoodTagsMode],
-    filterRecipeByIncompatibleTags,
-    filterRecipeByUnwantedTags,
+    filterRecipeByIncompatibleTags(selectedIncompatibleFoodTags),
+    filterRecipeByUnwantedTags(unwantedFoodTags),
   ];
   const rowIdFunction = (recipe: Recipe) => recipe.defaultName;
 
