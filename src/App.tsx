@@ -141,8 +141,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Title text={'夜雀料理'} />
-      <p>Welcome to Mystia&apos;s Izakaya</p>
+      <Title text={t('title')} />
       <LanguageDropdown language={language} changeLanguage={changeLanguage} />
       <RecipeForm
         dlcs={DLCS}

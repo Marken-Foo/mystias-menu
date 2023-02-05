@@ -68,21 +68,21 @@ const recipeSourceDisplay = (recipe: Recipe) => {
 export const RECIPE_COLUMNS: Column<Recipe>[] = [
   {
     accessor: 'icon',
-    label: 'recipeHeader',
+    label: 'recipeHeaders.dish',
     displayFunction: (recipe) => (
       <RecipeIconDisplay name={recipe.name} imageName={recipe.defaultName} />
     ),
   },
   {
     accessor: 'name',
-    label: 'recipeNameHeader',
+    label: 'recipeHeaders.name',
     displayFunction: (recipe) => recipe.name,
     isSortable: true,
     sortFunction: sortFunctionOnField((recipe) => recipe.name),
   },
   {
     accessor: 'tool',
-    label: 'recipeToolHeader',
+    label: 'recipeHeaders.tool',
     displayFunction: (recipe) => (
       <ToolDisplay
         name={recipe.tool.name}
@@ -94,14 +94,14 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
   },
   {
     accessor: 'ingredients',
-    label: 'recipeIngredientsHeader',
+    label: 'recipeHeaders.ingredients',
     displayFunction: (recipe) => (
       <IngredientsDisplay ingredients={recipe.ingredients} />
     ),
   },
   {
     accessor: 'tags',
-    label: 'recipeTagsHeader',
+    label: 'recipeHeaders.tags',
     displayFunction: (recipe) => (
       <>
         {recipe.tags.map((tag: string) => (
@@ -114,7 +114,7 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
   },
   {
     accessor: 'incompatibleTags',
-    label: 'recipeIncompatibleTagsHeader',
+    label: 'recipeHeaders.incompatibleTags',
     displayFunction: (recipe) => (
       <>
         {recipe.incompatibleTags.map((tag: string) => (
@@ -125,21 +125,21 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
   },
   {
     accessor: 'cookingTime',
-    label: 'recipeCookingTimeHeader',
+    label: 'recipeHeaders.cookingTime',
     displayFunction: (recipe) => recipe.cookingTime,
     isSortable: true,
     sortFunction: sortFunctionOnField((recipe) => recipe.cookingTime),
   },
   {
     accessor: 'price',
-    label: 'recipePriceHeader',
+    label: 'recipeHeaders.price',
     displayFunction: (recipe) => recipe.price,
     isSortable: true,
     sortFunction: sortFunctionOnField((recipe) => recipe.price),
   },
   {
     accessor: 'source',
-    label: 'recipeSourceHeader',
+    label: 'recipeHeaders.source',
     displayFunction: recipeSourceDisplay,
   },
 ];
