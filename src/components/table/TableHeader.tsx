@@ -38,7 +38,7 @@ export const TableHeader = <T extends Data>({
               header.isSortable ? 'clickable tableHeader' : 'tableHeader'
             }
           >
-            {header.label} {getSortIcon(header)}
+            {header.label}{getSortIcon(header)}
           </th>
         ))}
       </tr>

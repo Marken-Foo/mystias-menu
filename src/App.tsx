@@ -1,15 +1,25 @@
 import { useEffect, useState } from 'react';
 
-import { Recipe } from '@/interfaces/DataInterfaces';
+import { useTranslation } from 'react-i18next';
+
+import { Recipe, FullTag } from '@/interfaces/DataInterfaces'; // types
+import {
+  filterRecipeByAllTags,
+  filterRecipeByIncompatibleTags,
+  filterRecipeBySomeTags,
+  filterRecipeByUnwantedTags,
+} from '@/recipeUtils';
+import { LanguageDropdown } from '@components/LanguageDropdown';
 import { RECIPE_COLUMNS } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
-import { TagText } from '@components/Tag'; // types
 import { Title } from '@components/Title';
 import * as tb from '@components/table/Table';
 import '@/App.css';
 
-const RECIPES_URI = '/recipes.json';
-const FOOD_TAGS_URI = '/foodTags.json';
+const getRecipesUri = (lng: string) =>
+  `${import.meta.env.VITE_GET_RECIPES_URI}?lang=${lng}`;
+const getFoodTagsUri = (lng: string) =>
+  `${import.meta.env.VITE_GET_FOOD_TAGS_URI}?lang=${lng}`;
 
 export interface DlcChoice {
   base: boolean;
@@ -28,9 +38,34 @@ export enum SelectMode {
   AT_LEAST_ONE = 'some',
 }
 
+const translateTagList =
+  (allTags: FullTag[]) =>
+  (selectedTags: FullTag[]): FullTag[] => {
+    const translationMap: Map<string, string> = new Map();
+    allTags.forEach((tag: FullTag): void => {
+      translationMap.set(tag.defaultName, tag.name);
+    });
+    return selectedTags.map(
+      (tag: FullTag): FullTag => ({
+        ...tag,
+        name: translationMap.get(tag.defaultName) || 'notFound',
+      })
+    );
+  };
+
 const App = () => {
+  const [language, setLanguage] = useState('zh');
+  const { t, i18n } = useTranslation();
+  const changeLanguage = async (lng: string): Promise<void> => {
+    setLanguage(lng);
+    await i18n.changeLanguage(lng);
+    setRecipeColumns(() =>
+      RECIPE_COLUMNS.map((col) => ({ ...col, label: t(col.label) }))
+    );
+  };
+
   const DLCS: Dlc[] = [
-    { name: 'base', label: '基础游戏' },
+    { name: 'base', label: t('baseGame') },
     { name: 'DLC1', label: 'DLC1' },
     { name: 'DLC2', label: 'DLC2' },
     { name: 'DLC3', label: 'DLC3' },
@@ -42,35 +77,47 @@ const App = () => {
     ) as unknown as DlcChoice // Need to ensure DLCS and DlcChoice in sync
   );
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [recipeColumns] = useState<tb.Column<Recipe>[]>(RECIPE_COLUMNS);
-  const [foodTags, setFoodTags] = useState<TagText[]>([]);
-  const [selectedFoodTags, setSelectedFoodTags] = useState<TagText[]>([]);
+  const [recipeColumns, setRecipeColumns] = useState<tb.Column<Recipe>[]>(
+    RECIPE_COLUMNS.map((col) => {
+      return { ...col, label: t(col.label) };
+    })
+  );
+  const [foodTags, setFoodTags] = useState<FullTag[]>([]);
+  const [selectedFoodTags, setSelectedFoodTags] = useState<FullTag[]>([]);
   const [selectFoodTagsMode, setSelectFoodTagsMode] = useState<SelectMode>(
     SelectMode.ALL
   );
   const [selectedIncompatibleFoodTags, setSelectedIncompatibleFoodTags] =
-    useState<TagText[]>([]);
-  const [unwantedFoodTags, setUnwantedFoodTags] = useState<TagText[]>([]);
+    useState<FullTag[]>([]);
+  const [unwantedFoodTags, setUnwantedFoodTags] = useState<FullTag[]>([]);
 
   // Load recipes
   useEffect(() => {
     const loadData = async () => {
-      const res = await fetch(RECIPES_URI);
+      const res = await fetch(getRecipesUri(language));
       const data: Recipe[] = await res.json();
       setRecipes(data);
     };
     loadData();
-  }, []);
+  }, [language]);
 
   // Load tags
   useEffect(() => {
     const loadFoodTags = async () => {
-      const res = await fetch(FOOD_TAGS_URI);
-      const data: TagText[] = await res.json();
+      const res = await fetch(getFoodTagsUri(language));
+      const data = (await res.json()) as FullTag[];
       setFoodTags(data);
+      return data;
     };
-    loadFoodTags();
-  }, []);
+    const updateTags = async () => {
+      const foodTags = await loadFoodTags();
+      const foodTagsTranslator = translateTagList(foodTags);
+      setSelectedFoodTags(foodTagsTranslator);
+      setSelectedIncompatibleFoodTags(foodTagsTranslator);
+      setUnwantedFoodTags(foodTagsTranslator);
+    };
+    updateTags();
+  }, [language]);
 
   const filterRecipeByDlc = (recipe: Recipe) => {
     return Object.entries(dlcVersions)
@@ -79,42 +126,23 @@ const App = () => {
       .includes(recipe.dlc);
   };
 
-  const filterRecipeByAllTags = (recipe: Recipe) => {
-    return selectedFoodTags.every((tag) => recipe.tags.includes(tag));
-  };
-
-  const filterRecipeBySomeTag = (recipe: Recipe) => {
-    if (selectedFoodTags.length === 0) return true;
-    return selectedFoodTags.some((tag) => recipe.tags.includes(tag));
-  };
-
-  const filterRecipeByIncompatibleTags = (recipe: Recipe) => {
-    return selectedIncompatibleFoodTags.every((tag) =>
-      recipe.incompatibleTags.includes(tag)
-    );
-  };
-
-  const filterRecipeByUnwantedTags = (recipe: Recipe) => {
-    return unwantedFoodTags.every((tag) => !recipe.tags.includes(tag));
-  };
-
   const filterByTagFunctions = {
-    [SelectMode.ALL]: filterRecipeByAllTags,
-    [SelectMode.AT_LEAST_ONE]: filterRecipeBySomeTag,
+    [SelectMode.ALL]: filterRecipeByAllTags(selectedFoodTags),
+    [SelectMode.AT_LEAST_ONE]: filterRecipeBySomeTags(selectedFoodTags),
   };
 
   const filterFunctions = [
     filterRecipeByDlc,
     filterByTagFunctions[selectFoodTagsMode],
-    filterRecipeByIncompatibleTags,
-    filterRecipeByUnwantedTags,
+    filterRecipeByIncompatibleTags(selectedIncompatibleFoodTags),
+    filterRecipeByUnwantedTags(unwantedFoodTags),
   ];
-  const rowIdFunction = (recipe: Recipe) => recipe.name;
+  const rowIdFunction = (recipe: Recipe) => recipe.defaultName;
 
   return (
     <div className="App">
-      <Title text={'夜雀料理'} />
-      <p>Welcome to Mystia&apos;s Izakaya</p>
+      <Title text={t('title')} />
+      <LanguageDropdown language={language} changeLanguage={changeLanguage} />
       <RecipeForm
         dlcs={DLCS}
         dlcVersions={dlcVersions}

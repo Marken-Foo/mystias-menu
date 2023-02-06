@@ -9,6 +9,7 @@
   border: 2px solid transparent;
   grid-column: 1;
   line-height: 200%;
+  margin-right: 1em;
   white-space: nowrap;
 }
 

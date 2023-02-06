@@ -1,0 +1,23 @@
+{
+  "title": "夜雀料理",
+  "language": "Language",
+  "ownedContent": "持有游戏内容",
+  "baseGame": "基础游戏",
+  "positiveTags": "正特性筛选",
+  "incompatibleTags": "负特性筛选",
+  "unwantedTags": "排除正特性",
+  "matchall": "符合所有标签",
+  "matchany": "符合至少一个标签",
+  "recipeHeaders": {
+    "dish": "料理",
+    "name": "名称",
+    "tool": "道具",
+    "ingredients": "食材",
+    "tags": "正特性",
+    "incompatibleTags": "负特性",
+    "cookingTime": "烹饪时间",
+    "price": "售价（円）",
+    "source": "解锁方式"
+  },
+  "noTagsSelected": "请选标签..."
+}

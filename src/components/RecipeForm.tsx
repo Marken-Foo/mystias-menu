@@ -1,8 +1,11 @@
+import { useTranslation } from 'react-i18next';
+
 import '@components/RecipeForm.css';
 import { Dlc, DlcChoice, SelectMode } from '@/App'; // types
+import { FullTag } from '@/interfaces/DataInterfaces'; // types
 import { CheckboxWithCaption } from '@components/CheckboxWithCaption';
 import { RadioButtonWithCaption } from '@components/RadioButtonWithCaption';
-import { TagText, TagType } from '@components/Tag'; // types
+import { TagType } from '@components/Tag'; // types
 import { TagPicker } from '@components/TagPicker';
 
 interface MatchModeSelectorProps {
@@ -14,9 +17,10 @@ const MatchModeSelector = ({
   selectMode,
   setSelectMode,
 }: MatchModeSelectorProps) => {
+  const { t } = useTranslation('translation');
   const input = [
-    { value: SelectMode.ALL, caption: '符合所有标签' },
-    { value: SelectMode.AT_LEAST_ONE, caption: '符合至少一个标签' },
+    { value: SelectMode.ALL, caption: t('matchall') },
+    { value: SelectMode.AT_LEAST_ONE, caption: t('matchany') },
   ];
   return (
     <div className="verticalRadioButtons">
@@ -38,15 +42,15 @@ interface RecipeFormProps {
   dlcs: Dlc[];
   dlcVersions: DlcChoice;
   setDlcVersions: React.Dispatch<React.SetStateAction<DlcChoice>>;
-  tags: TagText[];
-  selectedTags: TagText[];
-  setSelectedTags: React.Dispatch<React.SetStateAction<TagText[]>>;
+  tags: FullTag[];
+  selectedTags: FullTag[];
+  setSelectedTags: React.Dispatch<React.SetStateAction<FullTag[]>>;
   selectMode: SelectMode;
   setSelectMode: React.Dispatch<React.SetStateAction<SelectMode>>;
-  selectedIncompatibleTags: TagText[];
-  setSelectedIncompatibleTags: React.Dispatch<React.SetStateAction<TagText[]>>;
-  unwantedTags: TagText[];
-  setUnwantedTags: React.Dispatch<React.SetStateAction<TagText[]>>;
+  selectedIncompatibleTags: FullTag[];
+  setSelectedIncompatibleTags: React.Dispatch<React.SetStateAction<FullTag[]>>;
+  unwantedTags: FullTag[];
+  setUnwantedTags: React.Dispatch<React.SetStateAction<FullTag[]>>;
 }
 
 export const RecipeForm = ({
@@ -63,9 +67,10 @@ export const RecipeForm = ({
   unwantedTags,
   setUnwantedTags,
 }: RecipeFormProps) => {
+  const { t } = useTranslation();
   return (
     <div className="recipeForm">
-      <span className="formLabel">持有游戏内容：</span>
+      <span className="formLabel">{t('ownedContent')}</span>
       <span className="formInput">
         {dlcs.map((dlc) => (
           <CheckboxWithCaption
@@ -81,7 +86,7 @@ export const RecipeForm = ({
           />
         ))}
       </span>
-      <span className="formLabel">正特性筛选：</span>
+      <span className="formLabel">{t('positiveTags')}</span>
       <TagPicker
         tags={tags}
         selectedTags={selectedTags}
@@ -92,14 +97,14 @@ export const RecipeForm = ({
         selectMode={selectMode}
         setSelectMode={setSelectMode}
       />
-      <span className="formLabel">负特性筛选：</span>
+      <span className="formLabel">{t('incompatibleTags')}</span>
       <TagPicker
         tags={tags}
         selectedTags={selectedIncompatibleTags}
         setSelectedTags={setSelectedIncompatibleTags}
         tagType={TagType.BAD}
       />
-      <span className="formLabel">排除正特性：</span>
+      <span className="formLabel">{t('unwantedTags')}</span>
       <TagPicker
         tags={tags}
         selectedTags={unwantedTags}

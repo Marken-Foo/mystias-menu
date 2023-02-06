@@ -1,0 +1,23 @@
+{
+  "title": "Mystia's Menu",
+  "language": "语言",
+  "ownedContent": "Owned content",
+  "baseGame": "Base game",
+  "positiveTags": "Include tags",
+  "incompatibleTags": "Incompatible tags",
+  "unwantedTags": "Exclude tags",
+  "matchall": "Match all tags",
+  "matchany": "Match at least one tag",
+  "recipeHeaders": {
+    "dish": "Dish",
+    "name": "Name",
+    "tool": "Tool",
+    "ingredients": "Ingredients",
+    "tags": "Tags",
+    "incompatibleTags": "Incompatible tags",
+    "cookingTime": "Cooking time",
+    "price": "Price",
+    "source": "Unlock"
+  },
+  "noTagsSelected": "Choose tags..."
+}

@@ -1,7 +1,5 @@
 import '@components/Tag.css';
 
-export type TagText = string;
-
 export enum TagType {
   FOOD = 'foodTag',
   DRINK = 'drinkTag',
@@ -13,7 +11,7 @@ export enum TagType {
 
 interface TagProps {
   type: TagType;
-  text: TagText;
+  text: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -22,7 +20,7 @@ const withClickable = (TagComponent: typeof Tag) => {
     const { type, ...rest } = props;
     const newProps = {
       ...rest,
-      type: `clickable ${type}` as TagText,
+      type: `clickable ${type}` as TagType,
     } as TagProps;
     return <TagComponent {...newProps} />;
   };

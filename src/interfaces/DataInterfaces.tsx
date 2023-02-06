@@ -43,17 +43,15 @@ interface OtherUnlock {
   source: string;
 }
 
-export interface ShortIngredient {
+export interface TranslatedName {
   name: string;
-  thwikiImage: string;
+  defaultName: string;
 }
 
-export interface Recipe {
-  name: string;
-  thwikiImage: string;
-  tool: string;
+export interface Recipe extends TranslatedName {
+  tool: TranslatedName;
   price: number;
-  ingredients: ShortIngredient[];
+  ingredients: TranslatedName[];
   tags: string[];
   incompatibleTags: string[];
   cookingTime: string;
@@ -68,3 +66,5 @@ export interface Recipe {
   description: string;
   dlc: string;
 }
+
+export type FullTag = TranslatedName;
