@@ -1,3 +1,5 @@
+import { t } from 'i18next';
+
 import {
   Recipe,
   TranslatedName,
@@ -48,16 +50,22 @@ const IngredientsDisplay = ({ ingredients }: IngredientsDisplayProps) => {
 const recipeSourceDisplay = (recipe: Recipe) => {
   switch (recipe.source.type) {
     case UnlockTypes.BOND:
-      return `【羁绊】\n${recipe.source.character} ${recipe.source.bondLevel} 级`;
+      return `${t('recipeSource.bond.title')}\n${t(
+        'recipeSource.bond.characterAndLevel',
+        {
+          character: recipe.source.character,
+          level: recipe.source.bondLevel,
+        }
+      )}`;
     case UnlockTypes.DEFAULT:
-      return '初始';
+      return t('recipeSource.default');
     case UnlockTypes.LEVEL:
-      return `主等级 ${recipe.source.level}`;
+      return t('recipeSource.level', { level: recipe.source.level });
     case UnlockTypes.MAINQUEST:
     case UnlockTypes.SIDEQUEST:
-      return `【探索】\n${recipe.source.quest}`;
+      return `${t('recipeSource.sidequest.title')}\n${recipe.source.quest}`;
     case UnlockTypes.SHOP:
-      return `【商店】\n${recipe.source.shop}`;
+      return `${t('recipeSource.shop.title')}\n${recipe.source.shop}`;
     case UnlockTypes.OTHER:
       return recipe.source.source;
     default:
@@ -65,24 +73,24 @@ const recipeSourceDisplay = (recipe: Recipe) => {
   }
 };
 
-export const RECIPE_COLUMNS: Column<Recipe>[] = [
+export const load_recipe_columns: () => Column<Recipe>[] = () => [
   {
     accessor: 'icon',
-    label: 'recipeHeaders.dish',
+    label: t('recipeHeaders.dish'),
     displayFunction: (recipe) => (
       <RecipeIconDisplay name={recipe.name} imageName={recipe.defaultName} />
     ),
   },
   {
     accessor: 'name',
-    label: 'recipeHeaders.name',
+    label: t('recipeHeaders.name'),
     displayFunction: (recipe) => recipe.name,
     isSortable: true,
     sortFunction: sortFunctionOnField((recipe) => recipe.name),
   },
   {
     accessor: 'tool',
-    label: 'recipeHeaders.tool',
+    label: t('recipeHeaders.tool'),
     displayFunction: (recipe) => (
       <ToolDisplay
         name={recipe.tool.name}
@@ -94,14 +102,14 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
   },
   {
     accessor: 'ingredients',
-    label: 'recipeHeaders.ingredients',
+    label: t('recipeHeaders.ingredients'),
     displayFunction: (recipe) => (
       <IngredientsDisplay ingredients={recipe.ingredients} />
     ),
   },
   {
     accessor: 'tags',
-    label: 'recipeHeaders.tags',
+    label: t('recipeHeaders.tags'),
     displayFunction: (recipe) => (
       <>
         {recipe.tags.map((tag: string) => (
@@ -114,7 +122,7 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
   },
   {
     accessor: 'incompatibleTags',
-    label: 'recipeHeaders.incompatibleTags',
+    label: t('recipeHeaders.incompatibleTags'),
     displayFunction: (recipe) => (
       <>
         {recipe.incompatibleTags.map((tag: string) => (
@@ -125,21 +133,21 @@ export const RECIPE_COLUMNS: Column<Recipe>[] = [
   },
   {
     accessor: 'cookingTime',
-    label: 'recipeHeaders.cookingTime',
+    label: t('recipeHeaders.cookingTime'),
     displayFunction: (recipe) => recipe.cookingTime,
     isSortable: true,
     sortFunction: sortFunctionOnField((recipe) => recipe.cookingTime),
   },
   {
     accessor: 'price',
-    label: 'recipeHeaders.price',
+    label: t('recipeHeaders.price'),
     displayFunction: (recipe) => recipe.price,
     isSortable: true,
     sortFunction: sortFunctionOnField((recipe) => recipe.price),
   },
   {
     accessor: 'source',
-    label: 'recipeHeaders.source',
+    label: t('recipeHeaders.source'),
     displayFunction: recipeSourceDisplay,
   },
 ];

@@ -10,7 +10,7 @@ import {
   filterRecipeByUnwantedTags,
 } from '@/recipeUtils';
 import { LanguageDropdown } from '@components/LanguageDropdown';
-import { RECIPE_COLUMNS } from '@components/RecipeComponents';
+import { load_recipe_columns } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
 import { Title } from '@components/Title';
 import * as tb from '@components/table/Table';
@@ -59,9 +59,7 @@ const App = () => {
   const changeLanguage = async (lng: string): Promise<void> => {
     setLanguage(lng);
     await i18n.changeLanguage(lng);
-    setRecipeColumns(() =>
-      RECIPE_COLUMNS.map((col) => ({ ...col, label: t(col.label) }))
-    );
+    setRecipeColumns(() => load_recipe_columns());
   };
 
   const DLCS: Dlc[] = [
@@ -78,9 +76,7 @@ const App = () => {
   );
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [recipeColumns, setRecipeColumns] = useState<tb.Column<Recipe>[]>(
-    RECIPE_COLUMNS.map((col) => {
-      return { ...col, label: t(col.label) };
-    })
+    load_recipe_columns()
   );
   const [foodTags, setFoodTags] = useState<FullTag[]>([]);
   const [selectedFoodTags, setSelectedFoodTags] = useState<FullTag[]>([]);

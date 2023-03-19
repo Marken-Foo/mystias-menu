@@ -19,5 +19,19 @@
     "price": "Price",
     "source": "Unlock"
   },
+  "recipeSource": {
+    "bond": {
+      "title": "[Bond]",
+      "characterAndLevel": "{{character}} level {{level}}"
+    },
+    "default": "By default",
+    "level": "Mystia level {{level}}",
+    "sidequest": {
+      "title": "[Quest]"
+    },
+    "shop": {
+      "title": "[Shop]"
+    }
+  },
   "noTagsSelected": "Choose tags..."
 }

@@ -19,5 +19,19 @@
     "price": "售价（円）",
     "source": "解锁方式"
   },
+  "recipeSource": {
+    "bond": {
+      "title": "【羁绊】",
+      "characterAndLevel": "{{character}} {{level}} 级"
+    },
+    "default": "初始",
+    "level": "主等级 {{level}}",
+    "sidequest": {
+      "title": "【探索】"
+    },
+    "shop": {
+      "title": "【商店】"
+    }
+  },
   "noTagsSelected": "请选标签..."
 }
