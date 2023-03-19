@@ -36,11 +36,13 @@ interface IngredientsDisplayProps {
 const IngredientsDisplay = ({ ingredients }: IngredientsDisplayProps) => {
   return (
     <>
-      {ingredients.map((ingredient) => (
+      {ingredients.map((ingredient, idx) => (
         <Ingredient
           name={ingredient.name}
           imageSource={`/images/ingredients/${ingredient.defaultName}.png`}
-          key={ingredient.defaultName}
+          // There may be more than one identical ingredient in the recipe
+          // Safe because we are not mutating the ingredient list?
+          key={ingredient.defaultName + idx.toString()} 
         />
       ))}
     </>
