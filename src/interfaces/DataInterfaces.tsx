@@ -67,4 +67,11 @@ export interface Recipe extends TranslatedName {
   dlc: string;
 }
 
+export interface Drink extends TranslatedName {
+  price: number;
+  tags: string[];
+  description: string;
+  dlc: string;
+}
+
 export type FullTag = TranslatedName;

@@ -7,12 +7,17 @@ import App from '@/App';
 // import './index.css';
 import '@/i18n';
 import { ErrorPage } from '@/ErrorPage';
+import { Drinks } from '@/routes/Drinks';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: '/drinks',
+    element: <Drinks />,
   },
 ]);
 

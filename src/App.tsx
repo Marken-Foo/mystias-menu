@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import { Recipe, FullTag } from '@/interfaces/DataInterfaces'; // types
 import {
@@ -38,7 +39,7 @@ export enum SelectMode {
   AT_LEAST_ONE = 'some',
 }
 
-const translateTagList =
+export const translateTagList =
   (allTags: FullTag[]) =>
   (selectedTags: FullTag[]): FullTag[] => {
     const translationMap: Map<string, string> = new Map();
@@ -139,6 +140,7 @@ const App = () => {
     <div className="App">
       <Title text={t('title')} />
       <LanguageDropdown language={language} changeLanguage={changeLanguage} />
+      <Link to={`/drinks`}>drinks page</Link>
       <RecipeForm
         dlcs={DLCS}
         dlcVersions={dlcVersions}
