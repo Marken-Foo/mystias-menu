@@ -10,6 +10,18 @@
   white-space: nowrap;
 }
 
+.drinkTag {
+  background-color: #c5e0eb;
+  border-radius: 12px;
+  color: #0388a0;
+  font-weight: bold;
+  line-height: 200%;
+  margin-right: 4px;
+  padding: 4px 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
 .foodTag {
   background-color: #f0e0ab;
   border-radius: 12px;

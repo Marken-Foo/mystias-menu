@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { Dlc, DlcChoice } from '@/App';
-import { Drink } from '@/interfaces/DataInterfaces'; // types
+import { Dlc, DlcChoice, SelectMode, translateTagList } from '@/App';
+import { Drink, FullTag, TranslatedName } from '@/interfaces/DataInterfaces'; // types
 import { loadDrinkColumns } from '@components/DrinkComponents';
 import { LanguageDropdown } from '@components/LanguageDropdown';
 import { Title } from '@components/Title';
@@ -12,6 +12,21 @@ import '@/routes/Drinks.css';
 
 const getDrinksUri = (lng: string) =>
   `${import.meta.env.VITE_GET_DRINKS_URI}?lang=${lng}`;
+const getDrinkTagsUri = (lng: string) =>
+  `${import.meta.env.VITE_GET_DRINK_TAGS_URI}?lang=${lng}`;
+
+const filterDrinkByAllTags =
+  (tagList: TranslatedName[]) =>
+  (drink: Drink): boolean => {
+    return tagList.every((tag) => drink.tags.includes(tag.name));
+  };
+
+const filterDrinkBySomeTags =
+  (tagList: TranslatedName[]) =>
+  (drink: Drink): boolean => {
+    if (tagList.length === 0) return true;
+    return tagList.some((tag) => drink.tags.includes(tag.name));
+  };
 
 export const Drinks = () => {
   const [language, setLanguage] = useState('zh');
@@ -28,7 +43,7 @@ export const Drinks = () => {
     { name: 'DLC2', label: 'DLC2' },
     { name: 'DLC3', label: 'DLC3' },
   ];
-  const [dlcVersions, ] = useState<DlcChoice>(
+  const [dlcVersions] = useState<DlcChoice>(
     Object.fromEntries(
       DLCS.map((dlc) => [dlc.name, true])
     ) as unknown as DlcChoice // Need to ensure DLCS and DlcChoice in sync
@@ -37,6 +52,11 @@ export const Drinks = () => {
   const [drinks, setDrinks] = useState<Drink[]>([]);
   const [drinkColumns, setDrinkColumns] = useState<tb.Column<Drink>[]>(
     loadDrinkColumns()
+  );
+  const [drinkTags, setDrinkTags] = useState<FullTag[]>([]);
+  const [selectedDrinkTags, setSelectedDrinkTags] = useState<FullTag[]>([]);
+  const [selectDrinkTagsMode, setSelectDrinkTagsMode] = useState<SelectMode>(
+    SelectMode.ALL
   );
 
   // Load drinks
@@ -49,6 +69,22 @@ export const Drinks = () => {
     loadData();
   }, [language]);
 
+  // Load tags
+  useEffect(() => {
+    const loadDrinkTags = async () => {
+      const res = await fetch(getDrinkTagsUri(language));
+      const data = (await res.json()) as FullTag[];
+      setDrinkTags(data);
+      return data;
+    };
+    const updateTags = async () => {
+      const drinkTags = await loadDrinkTags();
+      const drinkTagsTranslator = translateTagList(drinkTags);
+      setSelectedDrinkTags(drinkTagsTranslator);
+    };
+    updateTags();
+  }, [language]);
+
   const filterDrinkByDlc = (drink: Drink) => {
     return Object.entries(dlcVersions)
       .filter(([, isIncluded]) => isIncluded)
@@ -56,7 +92,15 @@ export const Drinks = () => {
       .includes(drink.dlc);
   };
 
-  const filterFunctions = [filterDrinkByDlc];
+  const filterByTagFunctions = {
+    [SelectMode.ALL]: filterDrinkByAllTags(selectedDrinkTags),
+    [SelectMode.AT_LEAST_ONE]: filterDrinkBySomeTags(selectedDrinkTags),
+  };
+
+  const filterFunctions = [
+    filterDrinkByDlc,
+    filterByTagFunctions[selectDrinkTagsMode],
+  ];
   const rowIdFunction = (drink: Drink) => drink.defaultName;
 
   return (

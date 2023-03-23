@@ -3,6 +3,7 @@
 import { Drink } from '@/interfaces/DataInterfaces'; // types
 import { sortFunctionOnField } from '@/utils';
 import { GameAssetIcon } from '@components/GameAssetIcon';
+import { Tag, TagType } from '@components/Tag';
 import { Column } from '@components/table/Table';
 
 interface DrinkIconDisplayProps {
@@ -28,5 +29,25 @@ export const loadDrinkColumns: () => Column<Drink>[] = () => [
     displayFunction: (drink) => drink.name,
     isSortable: true,
     sortFunction: sortFunctionOnField((drink) => drink.name),
+  },
+  {
+    accessor: 'tags',
+    label: 'Tags',
+    displayFunction: (drink) => (
+      <>
+        {drink.tags.map((tag: string) => (
+          <>
+            <Tag type={TagType.DRINK} text={tag} key={tag} />{' '}
+          </>
+        ))}
+      </>
+    ),
+  },
+  {
+    accessor: 'price',
+    label: 'Price',
+    displayFunction: (drink) => drink.price,
+    isSortable: true,
+    sortFunction: sortFunctionOnField((drink) => drink.price),
   },
 ];
