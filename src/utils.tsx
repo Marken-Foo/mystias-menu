@@ -1,3 +1,5 @@
+import { FullTag } from './interfaces/DataInterfaces';
+
 enum Locale {
   EN = 'en',
   ZH = 'zh',
@@ -25,3 +27,22 @@ export const defaultSortFunction = <T extends Stringable>(
     numeric: true,
   });
 };
+
+// Returns a function that can translate a FullTag[], given a reference
+// array of all translated FullTag[] possible.
+export const makeTagListTranslator =
+  (allTags: FullTag[]) =>
+  (selectedTags: FullTag[]): FullTag[] => {
+    // Create lookup for .defaultName -> (translated) .name
+    const translationMap: Map<string, string> = new Map();
+    allTags.forEach((tag: FullTag): void => {
+      translationMap.set(tag.defaultName, tag.name);
+    });
+    // Return translated tag array using lookup
+    return selectedTags.map(
+      (tag: FullTag): FullTag => ({
+        ...tag,
+        name: translationMap.get(tag.defaultName) || 'notFound',
+      })
+    );
+  };

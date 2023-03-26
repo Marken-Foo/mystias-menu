@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { Dlc, DlcChoice, SelectMode, translateTagList } from '@/App';
+import { Dlc, DlcChoice, SelectMode } from '@/App';
 import { Drink, FullTag } from '@/interfaces/DataInterfaces'; // types
 import {
   filterByAllTags,
   filterBySomeTags,
   filterByUnwantedTags,
 } from '@/tagFilterFunctions';
+import { makeTagListTranslator } from '@/utils';
 import { CheckboxWithCaption } from '@components/CheckboxWithCaption';
 import { loadDrinkColumns } from '@components/DrinkComponents';
 import { LanguageDropdown } from '@components/LanguageDropdown';
@@ -78,7 +79,7 @@ export const Drinks = () => {
     };
     const updateTags = async () => {
       const drinkTags = await loadDrinkTags();
-      const drinkTagsTranslator = translateTagList(drinkTags);
+      const drinkTagsTranslator = makeTagListTranslator(drinkTags);
       setSelectedDrinkTags(drinkTagsTranslator);
       setUnwantedDrinkTags(drinkTagsTranslator);
     };

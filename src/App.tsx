@@ -10,6 +10,7 @@ import {
   filterBySomeTags,
   filterByUnwantedTags,
 } from '@/tagFilterFunctions';
+import { makeTagListTranslator } from '@/utils';
 import { LanguageDropdown } from '@components/LanguageDropdown';
 import { load_recipe_columns } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
@@ -38,21 +39,6 @@ export enum SelectMode {
   ALL = 'all',
   AT_LEAST_ONE = 'some',
 }
-
-export const translateTagList =
-  (allTags: FullTag[]) =>
-  (selectedTags: FullTag[]): FullTag[] => {
-    const translationMap: Map<string, string> = new Map();
-    allTags.forEach((tag: FullTag): void => {
-      translationMap.set(tag.defaultName, tag.name);
-    });
-    return selectedTags.map(
-      (tag: FullTag): FullTag => ({
-        ...tag,
-        name: translationMap.get(tag.defaultName) || 'notFound',
-      })
-    );
-  };
 
 const App = () => {
   const [language, setLanguage] = useState('zh');
@@ -108,7 +94,7 @@ const App = () => {
     };
     const updateTags = async () => {
       const foodTags = await loadFoodTags();
-      const foodTagsTranslator = translateTagList(foodTags);
+      const foodTagsTranslator = makeTagListTranslator(foodTags);
       setSelectedFoodTags(foodTagsTranslator);
       setSelectedIncompatibleFoodTags(foodTagsTranslator);
       setUnwantedFoodTags(foodTagsTranslator);
