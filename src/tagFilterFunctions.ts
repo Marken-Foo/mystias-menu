@@ -1,5 +1,10 @@
 import { TranslatedName } from '@/interfaces/DataInterfaces'; // types
 
+export enum SelectMode {
+  ALL = 'all',
+  AT_LEAST_ONE = 'some',
+}
+
 interface FilterableByTag {
   tags: string[];
 }

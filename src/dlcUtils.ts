@@ -7,7 +7,7 @@ export interface DlcChoice {
   DLC3: boolean;
 }
 
-interface Dlc {
+export interface Dlc {
   name: string;
   label: string;
 }

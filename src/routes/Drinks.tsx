@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { SelectMode } from '@/App';
 import { DlcChoice, filterByDlc, loadDlcs } from '@/dlcUtils';
 import { Drink, FullTag } from '@/interfaces/DataInterfaces'; // types
 import {
   filterByAllTags,
   filterBySomeTags,
   filterByUnwantedTags,
+  SelectMode,
 } from '@/tagFilterFunctions';
 import { makeTagListTranslator } from '@/utils';
 import { CheckboxWithCaption } from '@components/CheckboxWithCaption';

@@ -10,6 +10,7 @@ import {
   filterByIncompatibleTags,
   filterBySomeTags,
   filterByUnwantedTags,
+  SelectMode,
 } from '@/tagFilterFunctions';
 import { makeTagListTranslator } from '@/utils';
 import { LanguageDropdown } from '@components/LanguageDropdown';
@@ -23,11 +24,6 @@ const getRecipesUri = (lng: string) =>
   `${import.meta.env.VITE_GET_RECIPES_URI}?lang=${lng}`;
 const getFoodTagsUri = (lng: string) =>
   `${import.meta.env.VITE_GET_FOOD_TAGS_URI}?lang=${lng}`;
-
-export enum SelectMode {
-  ALL = 'all',
-  AT_LEAST_ONE = 'some',
-}
 
 const App = () => {
   const [language, setLanguage] = useState('zh');

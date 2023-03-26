@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
 
 import '@components/RecipeForm.css';
-import { Dlc, DlcChoice, SelectMode } from '@/App'; // types
+import { Dlc, DlcChoice } from '@/dlcUtils';
 import { FullTag } from '@/interfaces/DataInterfaces'; // types
+import { SelectMode } from '@/tagFilterFunctions'; // types
 import { CheckboxWithCaption } from '@components/CheckboxWithCaption';
 import { RadioButtonWithCaption } from '@components/RadioButtonWithCaption';
 import { TagType } from '@components/Tag'; // types
