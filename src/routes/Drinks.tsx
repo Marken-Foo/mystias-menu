@@ -9,7 +9,7 @@ import {
   filterByAllTags,
   filterBySomeTags,
   filterByUnwantedTags,
-} from '@/recipeUtils';
+} from '@/tagFilterFunctions';
 import { CheckboxWithCaption } from '@components/CheckboxWithCaption';
 import { loadDrinkColumns } from '@components/DrinkComponents';
 import { LanguageDropdown } from '@components/LanguageDropdown';

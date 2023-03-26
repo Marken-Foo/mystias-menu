@@ -9,7 +9,7 @@ import {
   filterByIncompatibleTags,
   filterBySomeTags,
   filterByUnwantedTags,
-} from '@/recipeUtils';
+} from '@/tagFilterFunctions';
 import { LanguageDropdown } from '@components/LanguageDropdown';
 import { load_recipe_columns } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
