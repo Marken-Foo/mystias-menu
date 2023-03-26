@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { Dlc, DlcChoice, SelectMode } from '@/App';
+import { SelectMode } from '@/App';
+import { DlcChoice, filterByDlc, loadDlcs } from '@/dlcUtils';
 import { Drink, FullTag } from '@/interfaces/DataInterfaces'; // types
 import {
   filterByAllTags,
@@ -36,16 +37,11 @@ export const Drinks = () => {
     setDrinkColumns(() => loadDrinkColumns());
   };
 
-  const DLCS: Dlc[] = [
-    { name: 'base', label: t('baseGame') },
-    { name: 'DLC1', label: 'DLC1' },
-    { name: 'DLC2', label: 'DLC2' },
-    { name: 'DLC3', label: 'DLC3' },
-  ];
+  const DLCS = loadDlcs();
   const [dlcVersions, setDlcVersions] = useState<DlcChoice>(
     Object.fromEntries(
       DLCS.map((dlc) => [dlc.name, true])
-    ) as unknown as DlcChoice // Need to ensure DLCS and DlcChoice in sync
+    ) as unknown as DlcChoice
   );
 
   const [drinks, setDrinks] = useState<Drink[]>([]);
@@ -86,20 +82,13 @@ export const Drinks = () => {
     updateTags();
   }, [language]);
 
-  const filterDrinkByDlc = (drink: Drink) => {
-    return Object.entries(dlcVersions)
-      .filter(([, isIncluded]) => isIncluded)
-      .map(([name]) => name)
-      .includes(drink.dlc);
-  };
-
   const filterByTagFunctions = {
     [SelectMode.ALL]: filterByAllTags(selectedDrinkTags),
     [SelectMode.AT_LEAST_ONE]: filterBySomeTags(selectedDrinkTags),
   };
 
   const filterFunctions = [
-    filterDrinkByDlc,
+    filterByDlc(dlcVersions),
     filterByTagFunctions[selectDrinkTagsMode],
     filterByUnwantedTags(unwantedDrinkTags),
   ];

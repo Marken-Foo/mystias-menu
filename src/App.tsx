@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import { DlcChoice, filterByDlc, loadDlcs } from '@/dlcUtils';
 import { Recipe, FullTag } from '@/interfaces/DataInterfaces'; // types
 import {
   filterByAllTags,
@@ -23,18 +24,6 @@ const getRecipesUri = (lng: string) =>
 const getFoodTagsUri = (lng: string) =>
   `${import.meta.env.VITE_GET_FOOD_TAGS_URI}?lang=${lng}`;
 
-export interface DlcChoice {
-  base: boolean;
-  DLC1: boolean;
-  DLC2: boolean;
-  DLC3: boolean;
-}
-
-export interface Dlc {
-  name: string;
-  label: string;
-}
-
 export enum SelectMode {
   ALL = 'all',
   AT_LEAST_ONE = 'some',
@@ -49,17 +38,11 @@ const App = () => {
     setRecipeColumns(() => load_recipe_columns());
   };
 
-  const DLCS: Dlc[] = [
-    { name: 'base', label: t('baseGame') },
-    { name: 'DLC1', label: 'DLC1' },
-    { name: 'DLC2', label: 'DLC2' },
-    { name: 'DLC3', label: 'DLC3' },
-  ];
-
+  const DLCS = loadDlcs();
   const [dlcVersions, setDlcVersions] = useState<DlcChoice>(
     Object.fromEntries(
       DLCS.map((dlc) => [dlc.name, true])
-    ) as unknown as DlcChoice // Need to ensure DLCS and DlcChoice in sync
+    ) as unknown as DlcChoice
   );
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [recipeColumns, setRecipeColumns] = useState<tb.Column<Recipe>[]>(
@@ -102,20 +85,13 @@ const App = () => {
     updateTags();
   }, [language]);
 
-  const filterRecipeByDlc = (recipe: Recipe) => {
-    return Object.entries(dlcVersions)
-      .filter(([, isIncluded]) => isIncluded)
-      .map(([name]) => name)
-      .includes(recipe.dlc);
-  };
-
   const filterByTagFunctions = {
     [SelectMode.ALL]: filterByAllTags(selectedFoodTags),
     [SelectMode.AT_LEAST_ONE]: filterBySomeTags(selectedFoodTags),
   };
 
   const filterFunctions = [
-    filterRecipeByDlc,
+    filterByDlc(dlcVersions),
     filterByTagFunctions[selectFoodTagsMode],
     filterByIncompatibleTags(selectedIncompatibleFoodTags),
     filterByUnwantedTags(unwantedFoodTags),
