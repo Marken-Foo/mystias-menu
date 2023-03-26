@@ -1,26 +1,34 @@
-import { Recipe, TranslatedName } from '@/interfaces/DataInterfaces'; // types
+import { TranslatedName } from '@/interfaces/DataInterfaces'; // types
 
-export const filterRecipeByAllTags =
+interface FilterableByTag {
+  tags: string[];
+}
+
+interface FilterableByIncompatibleTag extends FilterableByTag {
+  incompatibleTags: string[];
+}
+
+export const filterByAllTags =
   (tagList: TranslatedName[]) =>
-  (recipe: Recipe): boolean => {
-    return tagList.every((tag) => recipe.tags.includes(tag.name));
+  <T extends FilterableByTag>(item: T): boolean => {
+    return tagList.every((tag) => item.tags.includes(tag.name));
   };
 
-export const filterRecipeBySomeTags =
+export const filterBySomeTags =
   (tagList: TranslatedName[]) =>
-  (recipe: Recipe): boolean => {
+  <T extends FilterableByTag>(item: T): boolean => {
     if (tagList.length === 0) return true;
-    return tagList.some((tag) => recipe.tags.includes(tag.name));
+    return tagList.some((tag) => item.tags.includes(tag.name));
   };
 
-export const filterRecipeByIncompatibleTags =
+export const filterByIncompatibleTags =
   (tagList: TranslatedName[]) =>
-  (recipe: Recipe): boolean => {
-    return tagList.every((tag) => recipe.incompatibleTags.includes(tag.name));
+  <T extends FilterableByIncompatibleTag>(item: T): boolean => {
+    return tagList.every((tag) => item.incompatibleTags.includes(tag.name));
   };
 
-export const filterRecipeByUnwantedTags =
+export const filterByUnwantedTags =
   (tagList: TranslatedName[]) =>
-  (recipe: Recipe): boolean => {
-    return tagList.every((tag) => !recipe.tags.includes(tag.name));
+  <T extends FilterableByTag>(item: T): boolean => {
+    return tagList.every((tag) => !item.tags.includes(tag.name));
   };

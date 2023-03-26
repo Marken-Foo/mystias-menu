@@ -4,7 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { Dlc, DlcChoice, SelectMode, translateTagList } from '@/App';
-import { Drink, FullTag, TranslatedName } from '@/interfaces/DataInterfaces'; // types
+import { Drink, FullTag } from '@/interfaces/DataInterfaces'; // types
+import {
+  filterByAllTags,
+  filterBySomeTags,
+  filterByUnwantedTags,
+} from '@/recipeUtils';
 import { CheckboxWithCaption } from '@components/CheckboxWithCaption';
 import { loadDrinkColumns } from '@components/DrinkComponents';
 import { LanguageDropdown } from '@components/LanguageDropdown';
@@ -20,25 +25,6 @@ const getDrinksUri = (lng: string) =>
   `${import.meta.env.VITE_GET_DRINKS_URI}?lang=${lng}`;
 const getDrinkTagsUri = (lng: string) =>
   `${import.meta.env.VITE_GET_DRINK_TAGS_URI}?lang=${lng}`;
-
-const filterDrinkByAllTags =
-  (tagList: TranslatedName[]) =>
-  (drink: Drink): boolean => {
-    return tagList.every((tag) => drink.tags.includes(tag.name));
-  };
-
-const filterDrinkBySomeTags =
-  (tagList: TranslatedName[]) =>
-  (drink: Drink): boolean => {
-    if (tagList.length === 0) return true;
-    return tagList.some((tag) => drink.tags.includes(tag.name));
-  };
-
-export const filterDrinkByUnwantedTags =
-  (tagList: TranslatedName[]) =>
-  (drink: Drink): boolean => {
-    return tagList.every((tag) => !drink.tags.includes(tag.name));
-  };
 
 export const Drinks = () => {
   const [language, setLanguage] = useState('zh');
@@ -107,14 +93,14 @@ export const Drinks = () => {
   };
 
   const filterByTagFunctions = {
-    [SelectMode.ALL]: filterDrinkByAllTags(selectedDrinkTags),
-    [SelectMode.AT_LEAST_ONE]: filterDrinkBySomeTags(selectedDrinkTags),
+    [SelectMode.ALL]: filterByAllTags(selectedDrinkTags),
+    [SelectMode.AT_LEAST_ONE]: filterBySomeTags(selectedDrinkTags),
   };
 
   const filterFunctions = [
     filterDrinkByDlc,
     filterByTagFunctions[selectDrinkTagsMode],
-    filterDrinkByUnwantedTags(unwantedDrinkTags),
+    filterByUnwantedTags(unwantedDrinkTags),
   ];
   const rowIdFunction = (drink: Drink) => drink.defaultName;
 

@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 
 import { Recipe, FullTag } from '@/interfaces/DataInterfaces'; // types
 import {
-  filterRecipeByAllTags,
-  filterRecipeByIncompatibleTags,
-  filterRecipeBySomeTags,
-  filterRecipeByUnwantedTags,
+  filterByAllTags,
+  filterByIncompatibleTags,
+  filterBySomeTags,
+  filterByUnwantedTags,
 } from '@/recipeUtils';
 import { LanguageDropdown } from '@components/LanguageDropdown';
 import { load_recipe_columns } from '@components/RecipeComponents';
@@ -124,15 +124,15 @@ const App = () => {
   };
 
   const filterByTagFunctions = {
-    [SelectMode.ALL]: filterRecipeByAllTags(selectedFoodTags),
-    [SelectMode.AT_LEAST_ONE]: filterRecipeBySomeTags(selectedFoodTags),
+    [SelectMode.ALL]: filterByAllTags(selectedFoodTags),
+    [SelectMode.AT_LEAST_ONE]: filterBySomeTags(selectedFoodTags),
   };
 
   const filterFunctions = [
     filterRecipeByDlc,
     filterByTagFunctions[selectFoodTagsMode],
-    filterRecipeByIncompatibleTags(selectedIncompatibleFoodTags),
-    filterRecipeByUnwantedTags(unwantedFoodTags),
+    filterByIncompatibleTags(selectedIncompatibleFoodTags),
+    filterByUnwantedTags(unwantedFoodTags),
   ];
   const rowIdFunction = (recipe: Recipe) => recipe.defaultName;
 
