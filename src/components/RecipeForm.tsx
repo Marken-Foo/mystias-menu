@@ -13,7 +13,7 @@ interface MatchModeSelectorProps {
   setSelectMode: React.Dispatch<React.SetStateAction<SelectMode>>;
 }
 
-const MatchModeSelector = ({
+export const MatchModeSelector = ({
   selectMode,
   setSelectMode,
 }: MatchModeSelectorProps) => {
