@@ -18,14 +18,14 @@ import { load_recipe_columns } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
 import { Title } from '@components/Title';
 import * as tb from '@components/table/Table';
-import '@/App.css';
+import '@/routes/Recipes.css';
 
 const getRecipesUri = (lng: string) =>
   `${import.meta.env.VITE_GET_RECIPES_URI}?lang=${lng}`;
 const getFoodTagsUri = (lng: string) =>
   `${import.meta.env.VITE_GET_FOOD_TAGS_URI}?lang=${lng}`;
 
-const App = () => {
+export const Recipes = () => {
   const [language, setLanguage] = useState('zh');
   const { t, i18n } = useTranslation();
   const changeLanguage = async (lng: string): Promise<void> => {
@@ -123,5 +123,3 @@ const App = () => {
     </div>
   );
 };
-
-export default App;

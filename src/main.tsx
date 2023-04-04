@@ -8,15 +8,19 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 
-import App from '@/App';
-import '@/i18n';
 import { ErrorPage } from '@/ErrorPage';
 import { Drinks } from '@/routes/Drinks';
+import { Recipes } from '@/routes/Recipes';
+import '@/i18n';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<App />} errorElement={<ErrorPage />}></Route>
+      <Route
+        path="/"
+        element={<Recipes />}
+        errorElement={<ErrorPage />}
+      ></Route>
       <Route path="/drinks" element={<Drinks />}></Route>
     </>
   )
