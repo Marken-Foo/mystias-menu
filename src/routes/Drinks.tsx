@@ -14,11 +14,9 @@ import {
 import { makeTagListTranslator } from '@/utils';
 import { CheckboxWithCaption } from '@components/CheckboxWithCaption';
 import { loadDrinkColumns } from '@components/DrinkComponents';
-import { LanguageDropdown } from '@components/LanguageDropdown';
 import { MatchModeSelector } from '@components/RecipeForm';
 import { TagType } from '@components/Tag';
 import { TagPicker } from '@components/TagPicker';
-import { Title } from '@components/Title';
 import * as tb from '@components/table/Table';
 
 import '@/routes/Drinks.css';
@@ -29,13 +27,7 @@ const getDrinkTagsUri = (lng: string) =>
   `${import.meta.env.VITE_GET_DRINK_TAGS_URI}?lang=${lng}`;
 
 export const Drinks = () => {
-  const [language, setLanguage] = useState('zh');
   const { t, i18n } = useTranslation();
-  const changeLanguage = async (lng: string): Promise<void> => {
-    setLanguage(lng);
-    await i18n.changeLanguage(lng);
-    setDrinkColumns(() => loadDrinkColumns());
-  };
 
   const DLCS = loadDlcs();
   const [dlcVersions, setDlcVersions] = useState<DlcChoice>(
@@ -45,7 +37,7 @@ export const Drinks = () => {
   );
 
   const [drinks, setDrinks] = useState<Drink[]>([]);
-  const [drinkColumns, setDrinkColumns] = useState<tb.Column<Drink>[]>(
+  const [drinkColumns,] = useState<tb.Column<Drink>[]>(
     loadDrinkColumns()
   );
   const [drinkTags, setDrinkTags] = useState<FullTag[]>([]);
@@ -58,17 +50,17 @@ export const Drinks = () => {
   // Load drinks
   useEffect(() => {
     const loadData = async () => {
-      const res = await fetch(getDrinksUri(language));
+      const res = await fetch(getDrinksUri(i18n.language));
       const data: Drink[] = await res.json();
       setDrinks(data);
     };
     loadData();
-  }, [language]);
+  }, [i18n.language]);
 
   // Load tags
   useEffect(() => {
     const loadDrinkTags = async () => {
-      const res = await fetch(getDrinkTagsUri(language));
+      const res = await fetch(getDrinkTagsUri(i18n.language));
       const data = (await res.json()) as FullTag[];
       setDrinkTags(data);
       return data;
@@ -80,7 +72,7 @@ export const Drinks = () => {
       setUnwantedDrinkTags(drinkTagsTranslator);
     };
     updateTags();
-  }, [language]);
+  }, [i18n.language]);
 
   const filterByTagFunctions = {
     [SelectMode.ALL]: filterByAllTags(selectedDrinkTags),
@@ -96,9 +88,7 @@ export const Drinks = () => {
 
   return (
     <div className="App">
-      <Title text={t('title')} />
       <Link to={'/'}>food page</Link>
-      <LanguageDropdown language={language} changeLanguage={changeLanguage} />
       <div className="recipeForm">
         <span className="formLabel">{t('ownedContent')}</span>
         <span className="formInput">

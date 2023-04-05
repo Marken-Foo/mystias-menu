@@ -8,6 +8,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 
+import { App } from '@/App';
 import { ErrorPage } from '@/ErrorPage';
 import { Drinks } from '@/routes/Drinks';
 import { Recipes } from '@/routes/Recipes';
@@ -16,12 +17,10 @@ import '@/i18n';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route
-        path="/"
-        element={<Recipes />}
-        errorElement={<ErrorPage />}
-      ></Route>
-      <Route path="/drinks" element={<Drinks />}></Route>
+      <Route path="/" element={<App />} errorElement={<ErrorPage />}>
+        <Route path="/" element={<Recipes />}></Route>
+        <Route path="/drinks" element={<Drinks />}></Route>
+      </Route>
     </>
   )
 );

@@ -13,10 +13,8 @@ import {
   SelectMode,
 } from '@/tagFilterFunctions';
 import { makeTagListTranslator } from '@/utils';
-import { LanguageDropdown } from '@components/LanguageDropdown';
 import { load_recipe_columns } from '@components/RecipeComponents';
 import { RecipeForm } from '@components/RecipeForm';
-import { Title } from '@components/Title';
 import * as tb from '@components/table/Table';
 import '@/routes/Recipes.css';
 
@@ -26,13 +24,7 @@ const getFoodTagsUri = (lng: string) =>
   `${import.meta.env.VITE_GET_FOOD_TAGS_URI}?lang=${lng}`;
 
 export const Recipes = () => {
-  const [language, setLanguage] = useState('zh');
-  const { t, i18n } = useTranslation();
-  const changeLanguage = async (lng: string): Promise<void> => {
-    setLanguage(lng);
-    await i18n.changeLanguage(lng);
-    setRecipeColumns(() => load_recipe_columns());
-  };
+  const { i18n } = useTranslation();
 
   const DLCS = loadDlcs();
   const [dlcVersions, setDlcVersions] = useState<DlcChoice>(
@@ -41,7 +33,7 @@ export const Recipes = () => {
     ) as unknown as DlcChoice
   );
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [recipeColumns, setRecipeColumns] = useState<tb.Column<Recipe>[]>(
+  const [recipeColumns,] = useState<tb.Column<Recipe>[]>(
     load_recipe_columns()
   );
   const [foodTags, setFoodTags] = useState<FullTag[]>([]);
@@ -56,17 +48,17 @@ export const Recipes = () => {
   // Load recipes
   useEffect(() => {
     const loadData = async () => {
-      const res = await fetch(getRecipesUri(language));
+      const res = await fetch(getRecipesUri(i18n.language));
       const data: Recipe[] = await res.json();
       setRecipes(data);
     };
     loadData();
-  }, [language]);
+  }, [i18n.language]);
 
   // Load tags
   useEffect(() => {
     const loadFoodTags = async () => {
-      const res = await fetch(getFoodTagsUri(language));
+      const res = await fetch(getFoodTagsUri(i18n.language));
       const data = (await res.json()) as FullTag[];
       setFoodTags(data);
       return data;
@@ -79,7 +71,7 @@ export const Recipes = () => {
       setUnwantedFoodTags(foodTagsTranslator);
     };
     updateTags();
-  }, [language]);
+  }, [i18n.language]);
 
   const filterByTagFunctions = {
     [SelectMode.ALL]: filterByAllTags(selectedFoodTags),
@@ -95,9 +87,7 @@ export const Recipes = () => {
   const rowIdFunction = (recipe: Recipe) => recipe.defaultName;
 
   return (
-    <div className="App">
-      <Title text={t('title')} />
-      <LanguageDropdown language={language} changeLanguage={changeLanguage} />
+    <>
       <Link to={`/drinks`}>drinks page</Link>
       <RecipeForm
         dlcs={DLCS}
@@ -120,6 +110,6 @@ export const Recipes = () => {
         rowIdFunction={rowIdFunction}
         filterFunctions={filterFunctions}
       />
-    </div>
+    </>
   );
 };
